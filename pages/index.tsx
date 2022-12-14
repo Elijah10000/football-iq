@@ -5,9 +5,24 @@ import styles from '../styles/Home.module.css'
 import { playersApi } from '../api/players'
 import styled from 'styled-components'
 
+type team = {
+  id: number;
+  name: string;
+  logo: string;
+}
+
+type player = {
+  id: number,
+  name: string;
+  age: number,
+  number: number,
+  position: string;
+  photo: string;
+}
+
 type IHome = {
-  players: any;
-  team: any;
+  players: player[];
+  team: team;
 }
 
 const Container = styled.div`
@@ -19,12 +34,15 @@ const Container = styled.div`
 export default function Home({ players, team }: IHome) {
   return (
     <Container>
-      {players.map((item, i) => {
+      {players.map((player: player, i: number) => {
 
         return (
-          <option key={i} value={item}>
-            {item.name}
-          </option>
+          <div key={i} value={player.name}>
+            {player.name}
+            {player.number}
+            {team.name}
+            <img src={team.logo} alt="ff" />
+          </div>
         );
       })}
     </Container>
@@ -33,7 +51,7 @@ export default function Home({ players, team }: IHome) {
 }
 
 export async function getServerSideProps(context: any) {
-  const { data } = await playersApi.getPlayersBySquadId("33");
+  const { data } = await playersApi.getPlayersBySquadId("49");
   console.log(data.response[0])
   return {
     props: {
@@ -42,6 +60,3 @@ export async function getServerSideProps(context: any) {
     }, // will be passed to the page component as props
   }
 }
-
-
-
