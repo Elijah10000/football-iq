@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { playersApi } from '../api/players'
 import styled from 'styled-components'
+import { Container, PlayersList, Player, TeamCrest, PlayerStatsList } from 'styles/index'
 
 type team = {
   id: number;
@@ -25,28 +25,33 @@ type IHome = {
   team: team;
 }
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
-`;
+
 
 export default function Home({ players, team }: IHome) {
   return (
     <Container>
-      {players.map((player: player, i: number) => {
 
-        return (
-          <div key={i} value={player.name}>
-            {player.name}
-            {player.number}
-            {team.name}
-            <img src={team.logo} alt="ff" />
-          </div>
-        );
-      })}
+      <TeamCrest>
+        <img src={team.logo} alt="ff" />
+      </TeamCrest>
+
+      <PlayersList>
+
+        {players.map((player: player) => {
+          return (
+            <Player key={player.id}>
+              <PlayerStatsList>
+                <li>{`Name: ${player.name}`}</li>
+                <li>{`Number:  ${player.number}`}</li>
+                <li>{`Age:  ${player.age}`}</li>
+                <li>{`Position: ${player.position}`}</li>
+                <li>{`Club: ${team.name}`}</li>
+              </PlayerStatsList>
+            </Player>
+          );
+        })}
+      </PlayersList>
     </Container>
-
   )
 }
 
