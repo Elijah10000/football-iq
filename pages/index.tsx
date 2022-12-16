@@ -1,39 +1,62 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { playersApi } from '../api/players'
 import styled from 'styled-components'
+import { Container, PlayersList, Player, TeamCrest, PlayerStatsList } from 'styles/index'
 
-type IHome = {
-  players: any;
-  team: any;
+type team = {
+  id: number;
+  name: string;
+  logo: string;
 }
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
-`;
+type player = {
+  id: number,
+  name: string;
+  age: number,
+  number: number,
+  position: string;
+  photo: string;
+}
+
+type IHome = {
+  players: player[];
+  team: team;
+}
+
+
 
 export default function Home({ players, team }: IHome) {
   return (
     <Container>
-      {players.map((item, i) => {
 
-        return (
-          <option key={i} value={item}>
-            {item.name}
-          </option>
-        );
-      })}
+      <TeamCrest>
+        <img src={team.logo} alt="ff" />
+      </TeamCrest>
+
+      <PlayersList>
+
+        {players.map((player: player) => {
+          return (
+            <Player key={player.id}>
+              <PlayerStatsList>
+                <li>{`Name: ${player.name}`}</li>
+                <li>{`Number:  ${player.number}`}</li>
+                <li>{`Age:  ${player.age}`}</li>
+                <li>{`Position: ${player.position}`}</li>
+                <li>{`Club: ${team.name}`}</li>
+              </PlayerStatsList>
+            </Player>
+          );
+        })}
+      </PlayersList>
     </Container>
-
   )
 }
 
 export async function getServerSideProps(context: any) {
-  const { data } = await playersApi.getPlayersBySquadId("33");
+  const { data } = await playersApi.getPlayersBySquadId("49");
   console.log(data.response[0])
   return {
     props: {
@@ -42,6 +65,3 @@ export async function getServerSideProps(context: any) {
     }, // will be passed to the page component as props
   }
 }
-
-
-
