@@ -8,6 +8,21 @@ export const Container = styled.div`
   flex-flow: row wrap;
 `;
 
+export const LogoDiv = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+flex-direction: column;
+}
+`;
+
+export const div = styled.div`
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+`;
+
 export const PlayersList = styled.ul`
   color: white;
   width: 100%;
@@ -15,6 +30,7 @@ export const PlayersList = styled.ul`
   justify-content: center;
   flex-direction: row;
   grid-template-columns: 1fr 1fr;
+  color: black;
 
 
   @media (min-width: 768px) {
@@ -35,13 +51,52 @@ export const PlayerStatsList = styled.ul`
   padding:0;
 `;
 
-export const PlayerN = styled.p`
-`;
-
 export const TeamCrest = styled.div`
+  display: flex;
   margin: 40px auto;
   img {
       width: 100px;
       height: 100px;
+  }
+`;
+
+export const LeaguesList = styled.ul`
+color: white;
+width: 100%;
+display: grid;
+justify-content: center;
+flex-direction: row;
+grid-template-columns: 1fr 1fr 1fr;
+`;
+
+export const League = styled.li`
+  margin-bottom: 20px;
+`;
+
+export const LeagueStatsList = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: black;
+`;
+
+export const LeagueDiv = styled.div`
+  margin-top: 5%;
+`;
+
+export const LeagueTextDiv = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+flex-direction: column;
+}
+`;
+
+export const LeagueNames = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
   }
 `;
