@@ -46,7 +46,6 @@ type IHome = {
 }
 
 export default function Home({ players, team, leagues }: IHome) {
-  console.log(leagues);
   return (
     <Container>
       
@@ -112,6 +111,27 @@ export default function Home({ players, team, leagues }: IHome) {
     </Container>
   )
 }
+
+// export function Dropdown (){
+//   const [items, setItems] = useState([]);
+//   const [inputValue, setValue] = useState ([]);
+//   const [selectedValue, setSelectedValue] = useState ([null]);
+
+//   const handleInputChange = value => {
+//     setValue(value);
+//   };
+
+//   const handleChange = value => {
+//     setSelectedValue(value);
+//   };
+
+//   const fetchData = () => {
+//     return  axios.get(`https://api-football-v1.p.rapidapi.com/v3/players/squads`).then(result => {
+//       const res = result.data.data;
+//       return res;
+//     });
+//   }
+// }
 
 export async function getServerSideProps(context: any) {
   const { data } = await playersApi.getPlayersBySquadId("49");
