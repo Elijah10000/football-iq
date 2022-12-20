@@ -44,6 +44,29 @@ type IHome = {
   team: team;
   leagues: league[];
 }
+import { Container, PlayersList, Player, TeamCrest, PlayerStatsList } from 'styles/index'
+
+type team = {
+  id: number;
+  name: string;
+  logo: string;
+}
+
+type player = {
+  id: number,
+  name: string;
+  age: number,
+  number: number,
+  position: string;
+  photo: string;
+}
+
+type IHome = {
+  players: player[];
+  team: team;
+}
+
+
 
 export default function Home({ players, team, leagues }: IHome) {
   return (
@@ -108,6 +131,27 @@ export default function Home({ players, team, leagues }: IHome) {
 
       </LeagueDiv>
       
+
+      <TeamCrest>
+        <img src={team.logo} alt="ff" />
+      </TeamCrest>
+
+      <PlayersList>
+
+        {players.map((player: player) => {
+          return (
+            <Player key={player.id}>
+              <PlayerStatsList>
+                <li>{`Name: ${player.name}`}</li>
+                <li>{`Number:  ${player.number}`}</li>
+                <li>{`Age:  ${player.age}`}</li>
+                <li>{`Position: ${player.position}`}</li>
+                <li>{`Club: ${team.name}`}</li>
+              </PlayerStatsList>
+            </Player>
+          );
+        })}
+      </PlayersList>
     </Container>
   )
 }
@@ -136,6 +180,7 @@ export default function Home({ players, team, leagues }: IHome) {
 export async function getServerSideProps(context: any) {
   const { data } = await playersApi.getPlayersBySquadId("49");
   const leagues = await leaguesApi.getLeagues();
+  console.log(data.response[0])
   return {
     props: {
       players: data.response[0].players,
@@ -145,3 +190,4 @@ export async function getServerSideProps(context: any) {
   }
 }
 
+}

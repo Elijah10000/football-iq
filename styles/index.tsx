@@ -53,6 +53,10 @@ export const PlayerStatsList = styled.ul`
 
 export const TeamCrest = styled.div`
   display: flex;
+export const PlayerN = styled.p`
+`;
+
+export const TeamCrest = styled.div`
   margin: 40px auto;
   img {
       width: 100px;
@@ -99,4 +103,5 @@ export const LeagueNames = styled.div`
   margin: 0 auto;
   flex-direction: column;
   }
+`;
 `;
