@@ -4,8 +4,7 @@ import Image from 'next/image'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import styled from 'styled-components'
-import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv } from 'styles/index'
-import { LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames } from 'styles/index'
+import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames } from 'styles/index'
 import { useState, useEffect } from 'react'
 import AsyncSelect from 'react-select/async';
 
@@ -44,34 +43,12 @@ type IHome = {
   team: team;
   leagues: league[];
 }
-import { Container, PlayersList, Player, TeamCrest, PlayerStatsList } from 'styles/index'
-
-type team = {
-  id: number;
-  name: string;
-  logo: string;
-}
-
-type player = {
-  id: number,
-  name: string;
-  age: number,
-  number: number,
-  position: string;
-  photo: string;
-}
-
-type IHome = {
-  players: player[];
-  team: team;
-}
-
 
 
 export default function Home({ players, team, leagues }: IHome) {
   return (
     <Container>
-      
+
       <LogoDiv>
         <div>
           <h1 style={{ borderBottom: '4px solid black' }}>
@@ -100,58 +77,39 @@ export default function Home({ players, team, leagues }: IHome) {
       </PlayersList>
 
 
-        <LeagueDiv>
+      <LeagueDiv>
 
-          <LeagueTextDiv>
+        <LeagueTextDiv>
           <h1 style={{ borderBottom: '4px solid black' }}>
             Leagues
           </h1>
-          </LeagueTextDiv>
+        </LeagueTextDiv>
 
         <LeaguesList>
-          
-        {leagues.map((league: league) => {
-          const leaguesToReturn = [39, 78, 61, 135, 140, 2];
 
-          if (!leaguesToReturn.includes(league.league.id)) return;
+          {leagues.map((league: league) => {
+            const leaguesToReturn = [39, 78, 61, 135, 140, 2];
 
-          return (
-            <League key={league.league.id}>
-              <LeagueStatsList>
-                <LeagueNames>
-                {`${league.league.name}`}
-                  <img src={league.league.logo} />
-                </LeagueNames>
-                {/* {`Logo: ${league.league.logo}`}</li> */}
-              </LeagueStatsList>
-            </League>
-          );
-        })}
-      </LeaguesList>
+            if (!leaguesToReturn.includes(league.league.id)) return;
+
+            return (
+              <League key={league.league.id}>
+                <LeagueStatsList>
+                  <LeagueNames>
+                    {`${league.league.name}`}
+                    <img src={league.league.logo} />
+                  </LeagueNames>
+                  {/* {`Logo: ${league.league.logo}`}</li> */}
+                </LeagueStatsList>
+              </League>
+            );
+          })}
+        </LeaguesList>
 
       </LeagueDiv>
-      
 
-      <TeamCrest>
-        <img src={team.logo} alt="ff" />
-      </TeamCrest>
 
-      <PlayersList>
 
-        {players.map((player: player) => {
-          return (
-            <Player key={player.id}>
-              <PlayerStatsList>
-                <li>{`Name: ${player.name}`}</li>
-                <li>{`Number:  ${player.number}`}</li>
-                <li>{`Age:  ${player.age}`}</li>
-                <li>{`Position: ${player.position}`}</li>
-                <li>{`Club: ${team.name}`}</li>
-              </PlayerStatsList>
-            </Player>
-          );
-        })}
-      </PlayersList>
     </Container>
   )
 }
@@ -186,8 +144,7 @@ export async function getServerSideProps(context: any) {
       players: data.response[0].players,
       team: data.response[0].team,
       leagues: leagues.data.response
-    }, 
+    },
   }
 }
 
-}
