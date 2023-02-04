@@ -103,3 +103,28 @@ export const LeagueNames = styled.div`
   }
 `;
 
+export const StatisticsList = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: black;
+`;
+
+export const StatisticsStatsList = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: black;
+`;
+
+export const Statistics = styled.div`
+  margin-top: 5%;
+`;
+
+export const PlayerData = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+  }
+`;
+

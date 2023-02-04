@@ -3,9 +3,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
+import { statisticsApi } from 'api/statistics'
 import styled from 'styled-components'
-import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames } from 'styles/index'
+import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames, StatisticsList, StatisticsStatsList, Statistics } from 'styles/index'
 import { useState, useEffect } from 'react'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import AsyncSelect from 'react-select/async';
 
 type team = {
@@ -38,17 +41,27 @@ type league = {
   }
 }
 
+type statistics = {
+  id: number;
+  goals: number;
+  assists: number;
+}
+ 
 type IHome = {
   players: player[];
   team: team;
   leagues: league[];
+  statistics: statistics;
 }
 
-
-export default function Home({ players, team, leagues }: IHome) {
+export default function Home({ players, team, leagues, statistics }: IHome) {
+  const [stats] = useState<statistics | null>(null);
+  const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  }
+  console.log(statistics);
   return (
     <Container>
-
       <LogoDiv>
         <div>
           <h1 style={{ borderBottom: '4px solid black' }}>
@@ -59,6 +72,9 @@ export default function Home({ players, team, leagues }: IHome) {
           <img src={team.logo} alt="ff" />
         </TeamCrest>
       </LogoDiv>
+
+
+
 
       <PlayersList>
         {players.map((player: player) => {
@@ -75,7 +91,6 @@ export default function Home({ players, team, leagues }: IHome) {
           );
         })}
       </PlayersList>
-
 
       <LeagueDiv>
 
@@ -96,10 +111,12 @@ export default function Home({ players, team, leagues }: IHome) {
               <League key={league.league.id}>
                 <LeagueStatsList>
                   <LeagueNames>
-                    {`${league.league.name}`}
+                    <button onClick={buttonHandler} className="button" name="button 1">
+                      {`${league.league.name}`}
+                    </button>
+
                     <img src={league.league.logo} />
                   </LeagueNames>
-                  {/* {`Logo: ${league.league.logo}`}</li> */}
                 </LeagueStatsList>
               </League>
             );
@@ -107,44 +124,21 @@ export default function Home({ players, team, leagues }: IHome) {
         </LeaguesList>
 
       </LeagueDiv>
-
-
-
     </Container>
   )
 }
 
-// export function Dropdown (){
-//   const [items, setItems] = useState([]);
-//   const [inputValue, setValue] = useState ([]);
-//   const [selectedValue, setSelectedValue] = useState ([null]);
-
-//   const handleInputChange = value => {
-//     setValue(value);
-//   };
-
-//   const handleChange = value => {
-//     setSelectedValue(value);
-//   };
-
-//   const fetchData = () => {
-//     return  axios.get(`https://api-football-v1.p.rapidapi.com/v3/players/squads`).then(result => {
-//       const res = result.data.data;
-//       return res;
-//     });
-//   }
-// }
-
 export async function getServerSideProps(context: any) {
   const { data } = await playersApi.getPlayersBySquadId("49");
   const leagues = await leaguesApi.getLeagues();
-  console.log(data.response[0])
+  const statistics = await statisticsApi.getStatisticsBySquadId("3", "2022", "49")
+  console.log(statistics);
   return {
     props: {
       players: data.response[0].players,
       team: data.response[0].team,
-      leagues: leagues.data.response
+      leagues: leagues.data.response,
+      statistics: statistics.data.response
     },
   }
 }
-
