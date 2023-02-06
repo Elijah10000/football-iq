@@ -10,6 +10,9 @@ import { useState, useEffect } from 'react'
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import AsyncSelect from 'react-select/async';
+import login from 'pages/login'
+import { BrowserRouter, Route } from 'react-router-dom';
+
 
 type team = {
   id: number;
@@ -54,6 +57,8 @@ type IHome = {
   statistics: statistics;
 }
 
+
+
 export default function Home({ players, team, leagues, statistics }: IHome) {
   const [stats] = useState<statistics | null>(null);
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,8 +78,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         </TeamCrest>
       </LogoDiv>
 
-
-
+      <a href="login">Click here to login!</a>
 
       <PlayersList>
         {players.map((player: player) => {
@@ -124,6 +128,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         </LeaguesList>
 
       </LeagueDiv>
+      
     </Container>
   )
 }
