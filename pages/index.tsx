@@ -1,10 +1,6 @@
-import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { statisticsApi } from 'api/statistics'
-import styled from 'styled-components'
 import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames, StatisticsList, StatisticsStatsList, Statistics } from 'styles/index'
 import { useState, useEffect } from 'react'
 import React, { Component } from 'react';
@@ -51,7 +47,7 @@ type statistics = {
   goals: number;
   assists: number;
 }
- 
+
 type IHome = {
   players: player[];
   team: team;
@@ -77,7 +73,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   const App = () => {
     const [league1, setLeague1] = useState(options);
     const [selectedLeague, setSelectedLeague] = useState(null);
-
     useEffect(() => {
       axios({
         method: 'GET',
@@ -180,7 +175,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         </LeaguesList>
 
       </LeagueDiv>
-      
+
     </Container>
   )
 }
