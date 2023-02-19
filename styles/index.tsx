@@ -128,3 +128,11 @@ export const PlayerData = styled.div`
   }
 `;
 
+export const DropdownDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+  }
+`;

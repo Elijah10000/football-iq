@@ -1,17 +1,13 @@
-import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { statisticsApi } from 'api/statistics'
-import styled from 'styled-components'
 import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames, StatisticsList, StatisticsStatsList, Statistics } from 'styles/index'
-import { useState, useEffect } from 'react'
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import AsyncSelect from 'react-select/async';
-import login from 'pages/login'
-import { BrowserRouter, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import React from 'react';
+import Select from "react-dropdown-select";
+import 'react-dropdown/style.css';
+import axios from 'axios'
+
 
 
 type team = {
@@ -49,7 +45,7 @@ type statistics = {
   goals: number;
   assists: number;
 }
- 
+
 type IHome = {
   players: player[];
   team: team;
@@ -57,6 +53,7 @@ type IHome = {
   statistics: statistics;
 }
 
+const options = [];
 
 
 export default function Home({ players, team, leagues, statistics }: IHome) {
@@ -65,6 +62,48 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
     event.preventDefault();
   }
   console.log(statistics);
+
+  const App = () => {
+    const [league1, setLeague1] = useState(options);
+    const [selectedLeague, setSelectedLeague] = useState(null);
+  
+    useEffect(() => {
+      axios({
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/leagues',
+        headers: {
+          'x-rapidapi-key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
+          'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+        }
+      })
+        .then(response => {
+          const leagues = response.data.response.map(league => ({
+            label: league.name,
+            value: league.league.id
+          }));
+          setLeague1(leagues);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, []);
+  
+    const handleSelectChange = selectedOption => {
+      setSelectedLeague(selectedOption);
+    };
+  
+    return (
+      <div>
+        <Select
+          options={league1}
+          value={selectedLeague}
+          onChange={handleSelectChange}
+        />
+      </div>
+    );
+  };
+  
+
   return (
     <Container>
       <LogoDiv>
@@ -79,6 +118,10 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       </LogoDiv>
 
       <a href="login">Click here to login!</a>
+
+
+
+      <Select options={options} onChange={() => console.log('values')} />
 
       <PlayersList>
         {players.map((player: player) => {
@@ -128,7 +171,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         </LeaguesList>
 
       </LeagueDiv>
-      
+
     </Container>
   )
 }
