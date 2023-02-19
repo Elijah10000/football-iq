@@ -2,12 +2,12 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { statisticsApi } from 'api/statistics'
 import { Container, PlayersList, Player, TeamCrest, PlayerStatsList, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LeagueNames, StatisticsList, StatisticsStatsList, Statistics } from 'styles/index'
-import { useEffect, useState } from 'react'
-import React from 'react';
-import Select from "react-dropdown-select";
-import 'react-dropdown/style.css';
-import axios from 'axios'
-
+import { useState, useEffect } from 'react'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import AsyncSelect from 'react-select/async';
+import login from 'pages/login'
+import { BrowserRouter, Route } from 'react-router-dom';
 
 
 type team = {
@@ -52,8 +52,6 @@ type IHome = {
   leagues: league[];
   statistics: statistics;
 }
-
-const options = [];
 
 
 export default function Home({ players, team, leagues, statistics }: IHome) {
@@ -118,8 +116,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       </LogoDiv>
 
       <a href="login">Click here to login!</a>
-
-
 
       <Select options={options} onChange={() => console.log('values')} />
 
