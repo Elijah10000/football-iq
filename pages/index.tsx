@@ -12,6 +12,8 @@ import ReactDOM from 'react-dom';
 import AsyncSelect from 'react-select/async';
 import login from 'pages/login'
 import { BrowserRouter, Route } from 'react-router-dom';
+import Select from 'react-select';
+
 
 
 type team = {
@@ -57,7 +59,13 @@ type IHome = {
   statistics: statistics;
 }
 
-
+const league1 = [
+  { value: 'Premier League', label: 'Premier League' },
+  { value: 'La Liga', label: 'La Liga' },
+  { value: 'Bundesliga', label: 'Bundesliga' },
+  { value: 'Serie A', label: 'Serie A' },
+  { value: 'Ligue 1', label: 'Ligue 1' }
+];
 
 export default function Home({ players, team, leagues, statistics }: IHome) {
   const [stats] = useState<statistics | null>(null);
@@ -65,6 +73,47 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
     event.preventDefault();
   }
   console.log(statistics);
+
+  const App = () => {
+    const [league1, setLeague1] = useState(options);
+    const [selectedLeague, setSelectedLeague] = useState(null);
+
+    useEffect(() => {
+      axios({
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/leagues',
+        headers: {
+          'x-rapidapi-key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
+          'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+        }
+      })
+        .then(response => {
+          const leagues = response.data.response.map(league => ({
+            label: league.name,
+            value: league.league.id
+          }));
+          setLeague1(leagues);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, []);
+
+    const handleSelectChange = selectedOption => {
+      setSelectedLeague(selectedOption);
+    };
+
+    return (
+      <div>
+        <Select
+          options={league1}
+          value={selectedLeague}
+          onChange={handleSelectChange}
+        />
+      </div>
+    );
+  };
+
   return (
     <Container>
       <LogoDiv>
@@ -79,6 +128,9 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       </LogoDiv>
 
       <a href="login">Click here to login!</a>
+
+      <Select options={league1} onChange={(selectedOption) => console.log(selectedOption)}/>
+
 
       <PlayersList>
         {players.map((player: player) => {
