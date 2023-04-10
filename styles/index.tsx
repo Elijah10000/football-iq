@@ -1,36 +1,35 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  max-width: 1200px;
-  margin-right: auto;
-  margin-left: auto;
+export const Container = styled.div<{ isDarkMode?: boolean }>`
+  ${({ isDarkMode }) => isDarkMode && 'background-color: black;'};
+  max-width: 100%;
   display: flex;
   flex-flow: row wrap;
+  // background-color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
 `;
 
 export const LogoDiv = styled.div`
 display: flex;
-justify-content: center;
 align-items: center;
-margin: 0 auto;
 flex-direction: column;
-}
+margin-left: 35%;
 `;
 
-export const div = styled.div`
-  margin-right: auto;
-  margin-left: auto;
-  display: flex;
+export const LoginDiv = styled.div`
+ margin-left: 1%;
+ margin-top: 1%;
+`;
+
+export const DropdownDiv = styled.div`
+  margin-left: 38%;
+  margin-top: 1%;
 `;
 
 export const PlayersList = styled.ul`
-  color: white;
   width: 100%;
   display: grid;
   justify-content: center;
-  flex-direction: row;
-  grid-template-columns: 1fr 1fr;
-  color: black;
+  margin-left: 8%;
 
 
   @media (min-width: 768px) {
@@ -51,8 +50,6 @@ export const PlayerStatsList = styled.ul`
   padding:0;
 `;
 
-
-
 export const TeamCrest = styled.div`
   display: flex;
   margin: 40px auto;
@@ -64,11 +61,9 @@ export const TeamCrest = styled.div`
 
 export const LeaguesList = styled.ul`
 color: white;
-width: 100%;
 display: grid;
-justify-content: center;
-flex-direction: row;
 grid-template-columns: 1fr 1fr 1fr;
+margin-left: 8%;
 `;
 
 export const League = styled.li`
@@ -83,24 +78,16 @@ export const LeagueStatsList = styled.ul`
 
 export const LeagueDiv = styled.div`
   margin-top: 5%;
+  margin-left: 7%;
 `;
 
 export const LeagueTextDiv = styled.div`
 display: flex;
-justify-content: center;
 align-items: center;
 margin: 0 auto;
 flex-direction: column;
+margin-bottom: 3%;
 }
-`;
-
-export const LeagueNames = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  flex-direction: column;
-  }
 `;
 
 export const StatisticsList = styled.ul`
@@ -128,11 +115,13 @@ export const PlayerData = styled.div`
   }
 `;
 
-export const DropdownDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  flex-direction: column;
-  }
+export const DarkDiv = styled.div`
+  background-color: #1e1e1e;
+  width: 100%;
+  height: 100%;
+  margin-top: 5%;
+  margin-left: 7%;
+  margin-bottom: 5%;
+  padding: 5%;
+  border-radius: 10px;
 `;
