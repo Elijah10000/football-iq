@@ -7,7 +7,7 @@ interface GlobalProviderProps {
 interface IGlobalContext {
     isDarkMode: boolean,
     setIsDarkMode: (t: boolean) => void;
-}
+} 
 
 const GlobalContext = createContext<IGlobalContext>({
     isDarkMode: false,

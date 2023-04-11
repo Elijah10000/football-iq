@@ -9,6 +9,8 @@ import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
+import styled from 'styled-components'
+import ValueType from 'react-select';
 
 type team = {
   id: number;
@@ -64,38 +66,21 @@ type LeagueNames = {
 
 const LeagueOptions: LeagueNames[] = [
   { value: 'Premier League', label: 'Premier League', id: '39' },
-  { value: 'La Liga', label: 'La Liga', id: '39' },
-  { value: 'Bundesliga', label: 'Bundesliga', id: '39' },
-  { value: 'Serie A', label: 'Serie A', id: '39' },
-  { value: 'Ligue 1', label: 'Ligue 1', id: '39' },
-  { value: 'UCL', label: 'UCL', id: '39' }
+  { value: 'La Liga', label: 'La Liga', id: '140' },
+  { value: 'Bundesliga', label: 'Bundesliga', id: '78' },
+  { value: 'Serie A', label: 'Serie A', id: '135' },
+  { value: 'Ligue 1', label: 'Ligue 1', id: '61' },
+  { value: 'UCL', label: 'UCL', id: '2' }
 ];
 
-
-
-// function Test()  {
-//   const [isDarkMode, setIsDarkMode] = useState(false);
-
-//   return (
-//     <div className={isDarkMode ? 'dark-mode' : ''}>
-//       <DarkMode isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-//       <h1>My TypeScript App</h1>
-//       <p>
-//         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-//         tincidunt, nunc sed euismod ullamcorper, urna nulla lobortis velit, id
-//         mollis purus ipsum at dolor. Aeqcqwefwqwwqfgq nean vitae enim sapien. Sed euismod
-//         purus non eleifend pharetra. Sed a lacinia lorem, nec varius arcu.
-//         Mauris sit amet mauris lectus. Ut scelerisque tortor in elit gravida,
-//         non dignissim velit aliquam. Vivamus pharetra quam id eros suscipit,
-//         sed maximus nibh congue.
-//       </p>
-//     </div>
-//   );
-// };
-
-
+const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
+  color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+  background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
+`;
 
 export default function Home({ players, team, leagues, statistics }: IHome) {
+  const { isDarkMode } = useGlobalContext();
+
   const [selectedLeague, setSelectedLeague] = useState<LeagueNames | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<team>(team);
   const [selectedPlayers, setSelectedPlayers] = useState<player[]>(players)
@@ -103,18 +88,18 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   }
-  const { isDarkMode } = useGlobalContext();
 
-  const handleChange = async () => {
+
+  const handleSelectChange = async (id: string) => {
     try {
-      const { data } = await teamsApi.getTeamsByLeagueId('39');
+      const { data } = await teamsApi.getTeamsByLeagueId(id);
       console.log(data.response)
       setTeams(data.response);
-      // Set State
     } catch (error) {
       console.log(error)
     }
   }
+
 
   const handleLogoClick = async (id: string) => {
 
@@ -127,8 +112,20 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       console.log(error)
     }
   }
+  const customStyles = {
+    option: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? (isDarkMode ? '#424242' : '#E6E6E6') : (isDarkMode ? '#282828' : 'white'),
+      color: state.isSelected ? (isDarkMode ? 'white' : 'black') : (isDarkMode ? 'white' : 'black'),
+    }),
+    control: (provided: any) => ({
+      ...provided,
+      backgroundColor: isDarkMode ? '#424242' : 'white',
+      color: isDarkMode ? 'white' : 'black',
+    }),
+  };
 
-  // console.log(selectedLeague);
+
 
   return (
     <Container isDarkMode={isDarkMode}>
@@ -148,10 +145,9 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         </TeamCrest>
       </LogoDiv>
 
-      <DropdownDiv>
-        {/* <Select options={LeagueOptions} onChange={(selectedOption) => setSelectedLeague(selectedOption as unknown as league)} /> */}
-        <Select options={LeagueOptions} onChange={handleChange} />
 
+      <DropdownDiv>
+        <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
       </DropdownDiv>
 
       {selectedLeague && (
@@ -190,33 +186,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
           );
         })}
       </PlayersList>
-
-      <LeagueDiv>
-
-        <LeagueTextDiv>
-          <h1 style={{ borderBottom: '4px solid black' }}>
-            Leagues
-          </h1>
-        </LeagueTextDiv>
-
-        <LeaguesList>
-
-          {leagues.map((league: league) => {
-            const leaguesToReturn = [39, 78, 61, 135, 140, 2];
-
-            if (!leaguesToReturn.includes(league.league.id)) return;
-
-            return (
-              <League key={league.league.id}>
-                <LeagueStatsList>
-                  <img src={league.league.logo} onClick={() => setSelectedLeague(league)} />
-                </LeagueStatsList>
-              </League>
-            );
-          })}
-        </LeaguesList>
-
-      </LeagueDiv>
 
     </Container>
   )

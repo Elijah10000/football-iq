@@ -5,7 +5,6 @@ export const Container = styled.div<{ isDarkMode?: boolean }>`
   max-width: 100%;
   display: flex;
   flex-flow: row wrap;
-  // background-color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
 `;
 
 export const LogoDiv = styled.div`
@@ -87,7 +86,6 @@ align-items: center;
 margin: 0 auto;
 flex-direction: column;
 margin-bottom: 3%;
-}
 `;
 
 export const StatisticsList = styled.ul`
@@ -112,7 +110,6 @@ export const PlayerData = styled.div`
   align-items: center;
   margin: 0 auto;
   flex-direction: column;
-  }
 `;
 
 export const DarkDiv = styled.div`
