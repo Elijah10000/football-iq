@@ -2,9 +2,10 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 export const ToggleContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 1rem 0;
+  align-items: center;  
+  justify-content: flex-end;
+  margin-top:  1%;
+  margin-right: 2%;
 `;
 
 interface ToggleLabelProps {
@@ -12,9 +13,9 @@ interface ToggleLabelProps {
   }
 
 export const ToggleLabel = styled.label<ToggleLabelProps>`
-  font-size: 1.2rem;
-  color: ${props => (props.isDarkMode ? '#fff' : '#000')};
-  margin-right: 1rem;
+  color: ${props => (props.isDarkMode ? '#fff' : '#3f3f3f')};
+  margin-right: 0.5rem;
+  margin-bottom: 0.2rem;
 `;
 
 export const ToggleSwitch = styled.input`

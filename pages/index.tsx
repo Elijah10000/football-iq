@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
@@ -10,7 +12,6 @@ import DarkMode from '../components/DarkMode';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
 import styled from 'styled-components'
-import ValueType from 'react-select';
 
 type team = {
   id: number;
@@ -89,7 +90,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
     event.preventDefault();
   }
 
-
   const handleSelectChange = async (id: string) => {
     try {
       const { data } = await teamsApi.getTeamsByLeagueId(id);
@@ -99,7 +99,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       console.log(error)
     }
   }
-
 
   const handleLogoClick = async (id: string) => {
 
@@ -125,30 +124,31 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
     }),
   };
 
-
-
   return (
+    
     <Container isDarkMode={isDarkMode}>
+
       <DarkMode />
+
       <LoginDiv>
-        <a href="login">Click here to login!</a>
-      </LoginDiv>
+        <a href="login">Login</a>
+      </LoginDiv> 
 
       <LogoDiv>
         <div>
           <h1 style={{ borderBottom: '4px solid black' }}>
-            Football IQ
+          <a href="/">Football IQ</a>
           </h1>
         </div>
         <TeamCrest>
           <img src={selectedTeam.logo} alt="ff" />
         </TeamCrest>
-      </LogoDiv>
 
-
-      <DropdownDiv>
+        <DropdownDiv>
         <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
-      </DropdownDiv>
+        </DropdownDiv>
+
+      </LogoDiv>
 
       {selectedLeague && (
         <h3>{selectedLeague.label}</h3>

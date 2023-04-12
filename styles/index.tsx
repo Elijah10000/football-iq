@@ -2,26 +2,27 @@ import styled from 'styled-components';
 
 export const Container = styled.div<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'background-color: black;'};
-  max-width: 100%;
-  display: flex;
-  flex-flow: row wrap;
+  overflow: hidden;
 `;
 
 export const LogoDiv = styled.div`
-display: flex;
-align-items: center;
-flex-direction: column;
-margin-left: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const LoginDiv = styled.div`
- margin-left: 1%;
- margin-top: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: -2%;
+  margin-left: 1%;
 `;
 
 export const DropdownDiv = styled.div`
-  margin-left: 38%;
-  margin-top: 1%;
+  max-width: 10%;
+  margin-bottom: 3%;
 `;
 
 export const PlayersList = styled.ul`
@@ -58,36 +59,6 @@ export const TeamCrest = styled.div`
   }
 `;
 
-export const LeaguesList = styled.ul`
-color: white;
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-margin-left: 8%;
-`;
-
-export const League = styled.li`
-  margin-bottom: 20px;
-`;
-
-export const LeagueStatsList = styled.ul`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  color: black;
-`;
-
-export const LeagueDiv = styled.div`
-  margin-top: 5%;
-  margin-left: 7%;
-`;
-
-export const LeagueTextDiv = styled.div`
-display: flex;
-align-items: center;
-margin: 0 auto;
-flex-direction: column;
-margin-bottom: 3%;
-`;
-
 export const StatisticsList = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -110,15 +81,4 @@ export const PlayerData = styled.div`
   align-items: center;
   margin: 0 auto;
   flex-direction: column;
-`;
-
-export const DarkDiv = styled.div`
-  background-color: #1e1e1e;
-  width: 100%;
-  height: 100%;
-  margin-top: 5%;
-  margin-left: 7%;
-  margin-bottom: 5%;
-  padding: 5%;
-  border-radius: 10px;
 `;
