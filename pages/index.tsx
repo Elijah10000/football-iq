@@ -5,13 +5,15 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { statisticsApi } from 'api/statistics'
-import { Container, PlayersList, Player, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LoginDiv, DropdownDiv, PlayerStatsList } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, LoginDiv, DropdownDiv, PlayerStatsList } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
 import styled from 'styled-components'
+import HamburgerBar from '../components/hamburgerBar';
+import { HamburgerDiv, HamburgerContainer, HamburgerButton, SidePanel } from 'styles/hamburgerBar-style'
 
 type team = {
   id: number;
@@ -74,6 +76,34 @@ const LeagueOptions: LeagueNames[] = [
   { value: 'UCL', label: 'UCL', id: '2' }
 ];
 
+export const Hamburger = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    console.log('Menu clicked!');
+  };
+
+  return (
+    <HamburgerDiv>
+      <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </HamburgerButton>
+      <SidePanel isOpen={isOpen}>
+        <ul>
+          <li>Option 1</li>
+          <li>Option 2</li>
+          <li>Option 3</li>
+          <li>Option 4</li>
+        </ul>
+      </SidePanel>
+    </HamburgerDiv>
+  );
+};
+
 const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
@@ -127,8 +157,8 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   return (
 
     <Container isDarkMode={isDarkMode}>
-
       <DarkMode />
+      <Hamburger />
 
       <LoginDiv>
         <a href="login">Login</a>
