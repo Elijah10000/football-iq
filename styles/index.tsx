@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'background-color: black;'};
   overflow: hidden;
+  height: 100vh;
 `;
 
 export const LogoDiv = styled.div`

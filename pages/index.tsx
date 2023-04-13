@@ -5,7 +5,7 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { statisticsApi } from 'api/statistics'
-import { Container, PlayersList, Player, TeamCrest, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LoginDiv, DropdownDiv, PlayerStatsList } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, LeagueTextDiv, LeaguesList, LeagueStatsList, League, LeagueDiv, LoginDiv, DropdownDiv, PlayerStatsList } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
@@ -84,7 +84,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
 
   const [selectedLeague, setSelectedLeague] = useState<LeagueNames | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<team>(team);
-  const [selectedPlayers, setSelectedPlayers] = useState<player[]>(players)
+  const [selectedPlayers, setSelectedPlayers] = useState<player[]>([])
   const [teams, setTeams] = useState<Team[]>();
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -125,7 +125,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   };
 
   return (
-    
+
     <Container isDarkMode={isDarkMode}>
 
       <DarkMode />
@@ -140,10 +140,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
           <a href="/">Football IQ</a>
           </h1>
         </div>
-        <TeamCrest>
-          <img src={selectedTeam.logo} alt="ff" />
-        </TeamCrest>
-
         <DropdownDiv>
         <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
         </DropdownDiv>
@@ -160,13 +156,9 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
           return (
             <Player key={team.team.id}>
               <PlayerStatsList>
-                <li>{`Team: ${team.team.id}`}</li>
-                <li>{`Name: ${team.team.name}`}</li>
-                <li>{`Country:  ${team.team.country}`}</li>
+                <li>{`Team: ${team.team.name}`}</li>
               </PlayerStatsList>
-
               <img src={team.team.logo} onClick={() => handleLogoClick(team.team.id)} />
-
             </Player>
           );
 
@@ -180,7 +172,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
                 <li>{`Number:  ${player.number}`}</li>
                 <li>{`Age:  ${player.age}`}</li>
                 <li>{`Position: ${player.position}`}</li>
-                <li>{`Club: ${selectedTeam.name}`}</li>
               </PlayerStatsList>
             </Player>
           );
