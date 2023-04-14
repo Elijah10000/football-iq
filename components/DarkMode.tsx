@@ -19,7 +19,7 @@ const DarkMode = () => {
       <GlobalStyles isDarkMode={isDarkMode} />
       <ToggleContainer>
       <ToggleLabel htmlFor="darkModeToggle" id="toggleLabel" isDarkMode={isDarkMode}>
-          {isDarkMode ? 'Light Mode 🌕' : 'Dark Mode 🌑'}
+          {isDarkMode ? 'Light Mode ' : 'Dark Mode '}
         </ToggleLabel>
         <ToggleSwitch
           type="checkbox"
@@ -31,5 +31,4 @@ const DarkMode = () => {
     </ThemeProvider>
   );
 };
-
 export default DarkMode;

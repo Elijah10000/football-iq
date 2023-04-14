@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'background-color: black;'};
   height: 100vh;
+  width: 100%;
 `;
 
 export const LogoDiv = styled.div`
@@ -10,6 +11,8 @@ export const LogoDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  margin-top: 2%;
 `;
 
 export const LoginDiv = styled.div`
