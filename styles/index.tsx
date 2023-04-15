@@ -4,6 +4,7 @@ export const Container = styled.div<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'background-color: black;'};
   height: 100vh;
   width: 100%;
+  overflow-x: hidden;
 `;
 
 export const LogoDiv = styled.div`
@@ -13,6 +14,13 @@ export const LogoDiv = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 2%;
+
+  div {
+  
+    &:hover h1 a {
+      opacity: 0.7;
+      }
+    }
 `;
 
 export const LoginDiv = styled.div`

@@ -97,7 +97,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       console.log(data.response)
       setTeams(data.response);
     } catch (error) {
-      console.log(error)
     }
   }
 
@@ -109,7 +108,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       setSelectedPlayers(data.response[0].players);
       setSelectedTeam(data.response[0].team)
     } catch (error) {
-      console.log(error)
     }
   }
   const customStyles = {
@@ -126,16 +124,12 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   };
 
   return (
-
     <Container isDarkMode={isDarkMode}>
      <Hamburger /> 
 
       <LogoDiv>
         <div>
-          <h1 style={{ borderBottom: '4px solid black' }}>
-          <a href="/">Football IQ</a>
-          
-          </h1>
+          <h1><a href="/">Football IQ 🧠</a></h1>
         </div>
         <DropdownDiv>
         <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
@@ -147,12 +141,12 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         <h3>{selectedLeague.label}</h3>
       )}
 
-      <PlayersList>
+      <PlayersList isDarkMode={isDarkMode} styles={customStyles}>
 
         {teams && teams?.length > 0 && teams.map((team: Team) => {
           return (
             <Player key={team.team.id}>
-              <PlayerStatsList>
+              <PlayerStatsList isDarkMode={isDarkMode} styles={customStyles}>
                 <li>{`Team: ${team.team.name}`}</li>
               </PlayerStatsList>
               <img src={team.team.logo} onClick={() => handleLogoClick(team.team.id)} />
@@ -174,7 +168,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
           );
         })}
       </PlayersList>
-
     </Container>
   )
 }

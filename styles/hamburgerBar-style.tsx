@@ -7,7 +7,8 @@ export const HamburgerDiv = styled.div<{ isDarkMode?: boolean }>`
   margin-top: 1%;
 `;
 
- export const HamburgerButton = styled.button<{ isOpen: boolean }>`
+export const HamburgerButton = styled.button<{ isOpen: boolean; isDarkMode?: boolean }>`
+  background-color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
   display: block;
   width: 30px;
   height: 22px;
@@ -21,7 +22,7 @@ export const HamburgerDiv = styled.div<{ isDarkMode?: boolean }>`
     content: "";
     width: 100%;
     height: 2px;
-    background-color: #000;
+    background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
     position: absolute;
     left: 0;
     transition: transform 0.2s ease-in-out;
@@ -50,7 +51,6 @@ export const SidePanel = styled.div<{ isOpen: boolean }>`
   max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')};
   overflow: hidden;
   transition: max-height 0.2s ease-in-out;
-  background-color: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
   ul {
@@ -64,7 +64,7 @@ export const SidePanel = styled.div<{ isOpen: boolean }>`
     cursor: pointer;
 
     &:hover {
-      background-color: #f5f5f5;
+      opacity: 0.8;
     }
   }
 `;

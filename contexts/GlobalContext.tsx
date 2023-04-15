@@ -14,11 +14,8 @@ const GlobalContext = createContext<IGlobalContext>({
     setIsDarkMode: () => null,
 });
 
-
 function GlobalProvider({ children }: GlobalProviderProps) {
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-
-    
 
     return (
         <GlobalContext.Provider value={{isDarkMode, setIsDarkMode}}>
@@ -26,7 +23,6 @@ function GlobalProvider({ children }: GlobalProviderProps) {
         </GlobalContext.Provider>
     );
 }
-
 
 const useGlobalContext = () => useContext(GlobalContext);
 

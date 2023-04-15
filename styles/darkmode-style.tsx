@@ -20,7 +20,6 @@ export const ToggleSwitch = styled.input`
   margin-left: 4%;
   width: 20px;
   height: 20px;
-  appearance: none;
   background-color: #ccc;
   border-radius: 20px;
   outline: none;
@@ -33,7 +32,6 @@ export const ToggleSwitch = styled.input`
     left: 2px;
     width: 16px;
     height: 16px;
-    background-color: #fff;
     border-radius: 50%;
   }
   
@@ -56,4 +54,3 @@ interface GlobalStylesProps {
       color: ${props => props.isDarkMode ? 'white' : 'black'};
     }
   `;
-  
