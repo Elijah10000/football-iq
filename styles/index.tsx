@@ -16,11 +16,10 @@ export const LogoDiv = styled.div`
   margin-top: 2%;
 
   div {
-  
     &:hover h1 a {
       opacity: 0.7;
-      }
     }
+  }
 `;
 
 export const LoginDiv = styled.div`
@@ -31,7 +30,13 @@ export const LoginDiv = styled.div`
   margin-left: 1%;
 `;
 
-export const DropdownDiv = styled.div`
+
+interface DropdownDivProps {
+  isDarkMode?: boolean;
+}
+
+export const DropdownDiv = styled.div<DropdownDivProps>`
+  background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
   max-width: 10%;
   margin-bottom: 3%;
 `;
@@ -41,6 +46,7 @@ export const PlayersList = styled.ul`
   display: grid;
   justify-content: center;
   margin-left: 8%;
+  color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
 
 
   @media (min-width: 768px) {
@@ -56,8 +62,9 @@ export const Player = styled.li`
   margin-bottom: 20px;
 `;
 
-export const PlayerStatsList = styled.ul`
-  list-style-type: none;
+export const PlayerStatsList = styled.ul<{ isDarkMode?: boolean }>`
+  color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
+  list-style-type: circle;
   padding:0;
 `;
 

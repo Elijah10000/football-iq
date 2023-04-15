@@ -5,7 +5,7 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { statisticsApi } from 'api/statistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
@@ -129,9 +129,9 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
 
       <LogoDiv>
         <div>
-          <h1><a href="/">Football IQ 🧠</a></h1>
+          <h1><a href="/" style={{ color: isDarkMode ? "white" : "black" }}>Football IQ 🧠</a></h1>
         </div>
-        <DropdownDiv>
+        <DropdownDiv isDarkMode={isDarkMode}>
         <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
         </DropdownDiv>
 
@@ -141,24 +141,24 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         <h3>{selectedLeague.label}</h3>
       )}
 
-      <PlayersList isDarkMode={isDarkMode} styles={customStyles}>
+      <PlayersList>
 
         {teams && teams?.length > 0 && teams.map((team: Team) => {
           return (
             <Player key={team.team.id}>
-              <PlayerStatsList isDarkMode={isDarkMode} styles={customStyles}>
+              <PlayerStatsList isDarkMode={isDarkMode}>
                 <li>{`Team: ${team.team.name}`}</li>
               </PlayerStatsList>
               <img src={team.team.logo} onClick={() => handleLogoClick(team.team.id)} />
-            </Player>
+            </Player> 
           );
-
         })}
 
         {!teams && selectedPlayers && selectedPlayers?.length > 0 && selectedPlayers.map((player: player) => {
           return (
             <Player key={player.id}>
-              <PlayerStatsList>
+              <img src={player.photo} />
+              <PlayerStatsList isDarkMode={isDarkMode}>
                 <li>{`Name: ${player.name}`}</li>
                 <li>{`Number:  ${player.number}`}</li>
                 <li>{`Age:  ${player.age}`}</li>

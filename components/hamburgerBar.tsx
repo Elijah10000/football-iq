@@ -22,7 +22,7 @@ export const Hamburger = (props: HamburgerProps) => {
         <HamburgerButton isOpen={isOpen} onClick={toggleMenu} isDarkMode={isDarkMode}>
           <span></span>
         </HamburgerButton>
-        <SidePanel isOpen={isOpen} >
+        <SidePanel isOpen={isOpen}>
           {isOpen && (
             <ul>
               <li><a href="login">Login</a></li>
