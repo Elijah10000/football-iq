@@ -3,16 +3,21 @@ import { useGlobalContext } from 'contexts/GlobalContext';
 import { ToggleContainer, ToggleLabel, ToggleSwitch, GlobalStyles } from 'styles/darkmode-style';
 import { ThemeProvider } from 'styled-components';
 
+interface DarkModeProps {
+  onToggle: () => void;
+}
+
 const theme = {
   isDarkMode: false,
 };
 
-const DarkMode = () => {
+const DarkMode = ({ onToggle }: DarkModeProps) => {
   const { isDarkMode, setIsDarkMode } = useGlobalContext();
 
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDarkMode(event.target.checked);
-  };
+    onToggle();
+};
 
   return (
     <ThemeProvider theme={{ ...theme, isDarkMode }}>

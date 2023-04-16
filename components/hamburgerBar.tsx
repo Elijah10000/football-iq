@@ -10,15 +10,20 @@ interface HamburgerProps {
 }
 
 export const Hamburger = (props: HamburgerProps) => {
-  const { isDarkMode, setIsDarkMode } = useGlobalContext();
+  const { isDarkMode } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleToggle = () => {
+    setIsOpen(false);
+  };
+
   return (
     <ThemeProvider theme={{ isDarkMode }}>
-      <HamburgerDiv isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} >
+      <HamburgerDiv isDarkMode={isDarkMode}>
         <HamburgerButton isOpen={isOpen} onClick={toggleMenu} isDarkMode={isDarkMode}>
           <span></span>
         </HamburgerButton>
@@ -26,7 +31,7 @@ export const Hamburger = (props: HamburgerProps) => {
           {isOpen && (
             <ul>
               <li><a href="login">Login</a></li>
-              <li><DarkMode /></li>
+              <li><DarkMode onToggle={handleToggle} /></li>
               <li>Option 3</li>
               <li>Option 4</li>
             </ul>

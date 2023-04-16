@@ -5,7 +5,7 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { statisticsApi } from 'api/statistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
@@ -82,7 +82,6 @@ const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
 
 export default function Home({ players, team, leagues, statistics }: IHome) {
   const { isDarkMode } = useGlobalContext();
-
   const [selectedLeague, setSelectedLeague] = useState<LeagueNames | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<team>(team);
   const [selectedPlayers, setSelectedPlayers] = useState<player[]>([])
@@ -101,7 +100,6 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   }
 
   const handleLogoClick = async (id: string) => {
-
     try {
       const { data } = await playersApi.getPlayersBySquadId(id);
       setTeams(undefined);
@@ -110,17 +108,35 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
     } catch (error) {
     }
   }
+
   const customStyles = {
-    option: (provided: any, state: any) => ({
+    control: (provided: any, state: { isDarkMode: any }) => ({
       ...provided,
-      backgroundColor: state.isSelected ? (isDarkMode ? '#424242' : '#E6E6E6') : (isDarkMode ? '#282828' : 'white'),
-      color: state.isSelected ? (isDarkMode ? 'white' : 'black') : (isDarkMode ? 'white' : 'black'),
+      color: state.isDarkMode ? 'white' : 'black',
+      backgroundColor: state.isDarkMode ? '#2b2b2b' : 'white',
+      border: state.isDarkMode ? '1px solid white' : '1px solid black',
+      boxShadow: state.isDarkMode ? 'none' : 'none',
+      '&:hover': {
+        borderColor: state.isDarkMode ? 'white' : 'black',
+      }
     }),
-    control: (provided: any) => ({
+    singleValue: (provided: any, state: { isDarkMode: any }) => ({
       ...provided,
-      backgroundColor: isDarkMode ? '#424242' : 'white',
-      color: isDarkMode ? 'white' : 'black',
+      color: state.isDarkMode ? 'white' : 'black'
     }),
+    placeholder: (provided: any, state: { isDarkMode: any }) => ({
+      ...provided,
+      color: state.isDarkMode ? 'white' : 'black'
+    }),
+    option: (provided: any, state: { isFocused: any; isDarkMode: any }) => ({
+      ...provided,
+      backgroundColor: state.isFocused && (state.isDarkMode ? 'black' : 'lightgray'),
+      color: state.isDarkMode ? 'white' : 'black',
+      '&:hover': {
+        backgroundColor: state.isDarkMode ? 'white' : 'lightgray',
+        color: state.isDarkMode ? 'white' : 'black'
+      }
+    })
   };
 
   return (
@@ -135,6 +151,13 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
         <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
         </DropdownDiv>
 
+        {selectedTeam && !teams && (
+          <TeamCrest>
+            <img src={selectedTeam.logo} alt={selectedTeam.name} />
+            <ClubTeamName isDarkMode={isDarkMode}>{selectedTeam.name}</ClubTeamName>
+          </TeamCrest>
+        )}
+
       </LogoDiv>
 
       {selectedLeague && (
@@ -142,14 +165,13 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
       )}
 
       <PlayersList>
-
         {teams && teams?.length > 0 && teams.map((team: Team) => {
           return (
             <Player key={team.team.id}>
               <PlayerStatsList isDarkMode={isDarkMode}>
-                <li>{`Team: ${team.team.name}`}</li>
               </PlayerStatsList>
-              <img src={team.team.logo} onClick={() => handleLogoClick(team.team.id)} />
+              <TeamName isDarkMode={isDarkMode}>{team.team.name}</TeamName>
+              <TeamImage src={team.team.logo} onClick={() => handleLogoClick(team.team.id)} />
             </Player> 
           );
         })}
@@ -180,7 +202,6 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       players: data.response[0].players,
-      team: data.response[0].team,
       leagues: leagues.data.response,
       statistics: statistics.data.response
     },

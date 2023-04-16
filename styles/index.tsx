@@ -37,15 +37,42 @@ interface DropdownDivProps {
 
 export const DropdownDiv = styled.div<DropdownDivProps>`
   background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
-  max-width: 10%;
   margin-bottom: 3%;
+`;
+
+export const TeamCrest = styled.div`
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+      width: 150px;
+      height: 150px;
+  }
+`;
+
+export const TeamName = styled.span<DropdownDivProps>`
+  color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
+  padding-bottom: 12px;
+  text-align: center;
+`;
+
+export const ClubTeamName = styled.span<DropdownDivProps>`
+  color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
+  padding-bottom: 12px;
+  text-align: center;
+`;
+
+export const TeamImage = styled.img`
+  cursor: pointer;
 `;
 
 export const PlayersList = styled.ul`
   width: 100%;
   display: grid;
   justify-content: center;
-  margin-left: 8%;
+  /* margin-left: 8%; */
   color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
 
 
@@ -60,21 +87,15 @@ export const PlayersList = styled.ul`
 
 export const Player = styled.li`	
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const PlayerStatsList = styled.ul<{ isDarkMode?: boolean }>`
   color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
   list-style-type: circle;
   padding:0;
-`;
-
-export const TeamCrest = styled.div`
-  display: flex;
-  margin: 40px auto;
-  img {
-      width: 100px;
-      height: 100px;
-  }
 `;
 
 export const StatisticsList = styled.ul`
