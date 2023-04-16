@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
+
 async function getLeagues(): Promise<AxiosResponse<any>> {
     const response: AxiosResponse<any> = await axios.get(
         `https://api-football-v1.p.rapidapi.com/v3/leagues`,

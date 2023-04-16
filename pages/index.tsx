@@ -4,7 +4,7 @@ import React from 'react'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
-import { statisticsApi } from 'api/statistics'
+import { playersStatisticsApi } from 'api/playersStatistics'
 import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
@@ -13,6 +13,7 @@ import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
 import styled from 'styled-components'
 import Hamburger from 'components/hamburgerBar'
+
 
 type team = {
   id: number;
@@ -46,9 +47,9 @@ type league = {
 }
 
 type statistics = {
-  id: number;
-  goals: number;
-  assists: number;
+  TeamId: string;
+  season: string;
+  leagueIds: number[];
 }
 
 
@@ -57,7 +58,6 @@ type IHome = {
   team: team;
   leagues: league[];
   statistics: statistics;
-  Test: any;
 }
 
 type LeagueNames = {
@@ -142,6 +142,7 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
   return (
     <Container isDarkMode={isDarkMode}>
      <Hamburger /> 
+       {/* <PlayersStatisticsApi /> */}
 
       <LogoDiv>
         <div>
@@ -197,13 +198,14 @@ export default function Home({ players, team, leagues, statistics }: IHome) {
 export async function getServerSideProps(context: any) {
   const { data } = await playersApi.getPlayersBySquadId("49");
   const leagues = await leaguesApi.getLeagues();
-  const statistics = await statisticsApi.getStatisticsBySquadId("3", "2022", "49")
-  console.log(statistics);
+  const leagueIds = [39, 140, 78, 135, 61, 2];
+  const response = await playersStatisticsApi.getStatisticsByTeamId("49", "2022", leagueIds);
+    console.log(JSON.stringify(response.data));
+
   return {
     props: {
       players: data.response[0].players,
       leagues: leagues.data.response,
-      statistics: statistics.data.response
     },
   }
 }
