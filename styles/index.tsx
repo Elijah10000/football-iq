@@ -121,3 +121,7 @@ export const PlayerData = styled.div`
   margin: 0 auto;
   flex-direction: column;
 `;
+
+export const PlayerStatsDiv = styled.div`
+
+`;
