@@ -51,6 +51,7 @@ type PlayerData = {
     id: number;
     name: string;
     age: number;
+    photo: string;
   };
   statistics: {
     team: {
@@ -191,6 +192,7 @@ export default function Home({ players, team, leagues }: IHome) {
         {playerData.map((player, index) => (
         <div key={index}>
           <h2>{player.player.name}</h2>
+          <p><img src={player.player.photo} /></p>
           <p>Age: {player.player.age}</p>
           <p>Nationality: {player.player.nationality}</p>
           <h3>Statistics:</h3>

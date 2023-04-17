@@ -25,9 +25,12 @@ const customStyles = {
         borderRadius: '8px',
         padding: '24px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.25)',
-        maxWidth: '900px',
+        maxWidth: '1200px',
         width: '100%',
         height: '80vh', // Set the height to 80% of the viewport height
+    },
+    closeButton: {
+        fontSize: '2rem', // Increase the font size to make the button bigger
     },
 };
 
@@ -39,6 +42,7 @@ function ModalComponent({ isOpen, onRequestClose, children }: ModalProps) {
             style={customStyles}
             contentLabel="Modal"
         >
+            <button onClick={onRequestClose} style={{position: 'absolute', top: '10px', right: '10px', color: 'black', border: 'none', padding: '8px', borderRadius: '50%', fontSize: '2rem', cursor: 'pointer' }}>X</button>
             {children}
         </Modal>
     );
