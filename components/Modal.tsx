@@ -27,10 +27,10 @@ const customStyles = {
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.25)',
         maxWidth: '1200px',
         width: '100%',
-        height: '80vh', // Set the height to 80% of the viewport height
+        height: '80vh',
     },
     closeButton: {
-        fontSize: '2rem', // Increase the font size to make the button bigger
+        fontSize: '2rem',
     },
 };
 

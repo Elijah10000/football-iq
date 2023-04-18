@@ -5,7 +5,7 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
@@ -14,6 +14,8 @@ import type { Team } from 'api/teams';
 import styled from 'styled-components'
 import Hamburger from 'components/hamburgerBar'
 import { ModalComponent } from 'components/Modal'
+import { List, Bio } from 'styles/modal-stats-style'
+
 
 type team = {
   id: number;
@@ -189,41 +191,55 @@ export default function Home({ players, team, leagues }: IHome) {
         {isPlayStatModalOpen && (
 
           <ModalComponent isOpen={isPlayStatModalOpen} onRequestClose={() => setIsPlayStatModalOpen(false)}>
-        {playerData.map((player, index) => (
-        <div key={index}>
-          <h2>{player.player.name}</h2>
-          <p><img src={player.player.photo} /></p>
-          <p>Age: {player.player.age}</p>
-          <p>Nationality: {player.player.nationality}</p>
-          <h3>Statistics:</h3>
-          <ul>
-            <li>
-              <p>Team: {player.statistics[player.statistics.length - 1].team.name}</p>
-              <p>League: {player.statistics[player.statistics.length - 1].league.name}</p>
-              <p>Position: {player.statistics[player.statistics.length - 1].games.position}</p>
-              <p>Rating: {player.statistics[player.statistics.length - 1].games.rating}</p>
-              <p>Games: {player.statistics[player.statistics.length - 1].games.appearances}</p>
-              <p>Minutes: {player.statistics[player.statistics.length - 1].games.minutes}</p>
-              <p>Goals: {player.statistics[player.statistics.length - 1].goals.total}</p>
-              <p>Assists: {player.statistics[player.statistics.length - 1].goals.assists}</p>
-              <p>Shots: {player.statistics[player.statistics.length - 1].shots.total}</p>
-              <p>Shots on target: {player.statistics[player.statistics.length - 1].shots.on}</p>
-              <p>Passes: {player.statistics[player.statistics.length - 1].passes.total}</p>
-              <p>Passes accuracy: {player.statistics[player.statistics.length - 1].passes.accuracy}</p>
-              <p>Tackles: {player.statistics[player.statistics.length - 1].tackles.total}</p>
-              <p>Blocks: {player.statistics[player.statistics.length - 1].tackles.blocks}</p>
-              <p>Interceptions: {player.statistics[player.statistics.length - 1].tackles.interceptions}</p>
-              <p>Duels: {player.statistics[player.statistics.length - 1].duels.total}</p>
-              <p>Duels won: {player.statistics[player.statistics.length - 1].duels.won}</p>
-              <p>Yellow cards: {player.statistics[player.statistics.length - 1].cards.yellow}</p>
-              <p>Red cards: {player.statistics[player.statistics.length - 1].cards.red}</p>
-              <p>Fouls: {player.statistics[player.statistics.length - 1].fouls.drawn}</p>
-              <p>Fouls suffered: {player.statistics[player.statistics.length - 1].fouls.committed}</p>
-            </li>
-          </ul>
-        </div>
+          {playerData.map((player, index) => (
+          <Bio key={index}>
+            <h1>{player.player.name}</h1>
+            <img src={player.player.photo} />
+            <li><b>Age:</b> {player.player.age}</li>
+            <li><b>Nationality:</b> {player.player.nationality}</li>
+            <li><b>Height:</b> {player.player.height}</li>
+            <li><b>Weight:</b> {player.player.weight}</li>
+            <li><b>Position:</b> {player.statistics[0].games.position}</li>
+            <h1>Statistics:</h1>
+            <ul>
+                {player.statistics.map((team, index) => (
+                    <List key={index}>
+                        <p><b>Team:</b> {team.team.name}</p>
+                        <p><b>League:</b> {team.league.name}</p>
+                        <p><b>Position:</b> {team.games.position}</p>
+                        <p><b>Rating:</b> {team.games.rating}</p>
+                        <p><b>Games:</b> {team.games.appearances}</p>
+                        <p><b>Minutes:</b> {team.games.minutes}</p>
+                        <p><b>Goals:</b> {team.goals.total}</p>
+                        <p><b>Assists:</b> {team.goals.assists}</p>
+                        <p><b>Shots:</b> {team.shots.total}</p>
+                        <p><b>Shots on target:</b> {team.shots.on}</p>
+                        <p><b>Passes:</b> {team.passes.total}</p>
+                        <p><b>Passes accuracy:</b> {team.passes.accuracy}</p>
+                        <p><b>Tackles:</b> {team.tackles.total}</p>
+                        <p><b>Blocks:</b> {team.tackles.blocks}</p>
+                        <p><b>Interceptions:</b> {team.tackles.interceptions}</p>
+                        <p><b>Duels:</b> {team.duels.total}</p>
+                        <p><b>Duels won:</b> {team.duels.won}</p>
+                        <p><b>Yellow cards:</b> {team.cards.yellow}</p>
+                        <p><b>Red cards:</b> {team.cards.red}</p>
+                        <p><b>Substitutes in:</b> {team.substitutes.in}</p>
+                        <p><b>Substitutes out:</b> {team.substitutes.out}</p>
+                        <p><b>Substitutes bench:</b> {team.substitutes.bench}</p>
+                        <p><b>Penalties scored:</b> {team.penalty.scored}</p>
+                        <p><b>Penalties missed:</b> {team.penalty.missed}</p>
+                        <p><b>Penalties saved:</b> {team.penalty.saved}</p>
+                        <p><b>Penalties conceded:</b> {team.penalty.conceded}</p>
+                        <p><b>Penalties won:</b> {team.penalty.won}</p>
+                        <p><b>Penalties commited:</b> {team.penalty.committed}</p>
+                        <p><b>Penalties success:</b> {team.penalty.success}</p>                    
+                        <p><b></b> {team.fouls.drawn}</p>
+                        <p><b>Fouls suffered:</b> {team.fouls.committed}</p>
+                    </List>
+                ))}
+            </ul>
+        </Bio>
 ))}
-
           </ModalComponent>
         )}
 
@@ -265,8 +281,8 @@ export default function Home({ players, team, leagues }: IHome) {
         {!teams && selectedPlayers && selectedPlayers?.length > 0 && selectedPlayers.map((player: player) => {
           return (
             <Player key={player.id} onClick={() => handlePlayerClick(player.id)}>
-              <img src={player.photo} />
-              <PlayerStatsList isDarkMode={isDarkMode}>
+            <PlayerPhoto src={player.photo} />
+                <PlayerStatsList isDarkMode={isDarkMode}>
                 <li>{`Name: ${player.name}`}</li>
                 <li>{`Number:  ${player.number}`}</li>
                 <li>{`Age:  ${player.age}`}</li>

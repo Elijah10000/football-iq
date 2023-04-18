@@ -122,6 +122,9 @@ export const PlayerData = styled.div`
   flex-direction: column;
 `;
 
-export const PlayerStatsDiv = styled.div`
+export const PlayerPhoto = styled.img`
+    border-radius: 50%;
+`;
 
+export const PlayerStatsDiv = styled.div`
 `;
