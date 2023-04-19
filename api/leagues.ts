@@ -29,4 +29,4 @@ async function getLeaguesByLeagueId(id: string): Promise<AxiosResponse<any>> {
 
     return response;
 }
-export const leaguesApi = {getLeagues, getLeaguesByLeagueId};
+export const leaguesApi = { getLeagues, getLeaguesByLeagueId };

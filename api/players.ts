@@ -16,4 +16,4 @@ async function getPlayersBySquadId(id: string): Promise<AxiosResponse<any>> {
     return response;
 }
 
-export const playersApi = {getPlayersBySquadId};
+export const playersApi = { getPlayersBySquadId };
