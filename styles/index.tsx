@@ -72,7 +72,6 @@ export const PlayersList = styled.ul`
   width: 100%;
   display: grid;
   justify-content: center;
-  /* margin-left: 8%; */
   color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
 
 
@@ -127,4 +126,19 @@ export const PlayerPhoto = styled.img`
 `;
 
 export const PlayerStatsDiv = styled.div`
+`;
+
+export const PlayerContainer = styled.div`
+  display: flex;
+`;
+
+export const PlayerBio = styled.div`
+  max-width: 30%;
+  margin-left: 18%;
+`;
+
+export const ChartContainer = styled.div`
+  width: 30%;
+  margin-left: 18%;
+  margin-top: 3%;
 `;

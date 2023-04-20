@@ -31,7 +31,7 @@ function ChartPage({ playerId }: ChartPageInterface) {
     labels: ['Goals', 'Fouls', 'Shots', 'Dribbles', 'Yellows', 'Reds'],
     datasets: [
       {
-        label: '# of Data',
+        label: ' ',
         data: playerData ? [playerData.goals, playerData.fouls, playerData.shots, playerData.dribbles, playerData.bookings, playerData.sentOff] : [],
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
@@ -57,7 +57,7 @@ function ChartPage({ playerId }: ChartPageInterface) {
   console.log(chartData)
   return (
     <div>
-      <Doughnut data={chartData} />
+      <Doughnut data={chartData}/>
     </div>
   );
 }

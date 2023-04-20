@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 
 export const Bio = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  
 
   h1 {
     margin-top: 20px;
     font-size: 24px;
     font-weight: bold;
-    text-align: center;
+    margin-left: 5%;
   }
 
   img {

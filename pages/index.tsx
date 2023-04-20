@@ -5,7 +5,7 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
@@ -201,16 +201,29 @@ export default function Home({ players, team, leagues }: IHome) {
 
             {playerData.map((player, index) => (
               <Bio key={index}>
-                <ChartPage playerId={player.player.id} />
-                <h1>{player.player.name}</h1>
-                <img src={player.player.photo} />
-                <li><b>Age:</b> {player.player.age}</li>
-                <li><b>Nationality:</b> {player.player.nationality}</li>
-                <li><b>Height:</b> {player.player.height}</li>
-                <li><b>Weight:</b> {player.player.weight}</li>
-                <li><b>Position:</b> {player.statistics[0].games.position}</li>
-                <h1>Statistics:</h1>
+               
+                <PlayerContainer>
+
+                  <PlayerBio>
+                    <h1>{player.player.name}</h1>
+                    <img src={player.player.photo} />
+                    <ul>
+                      <li><b>Age:</b> {player.player.age}</li>
+                      <li><b>Nationality:</b> {player.player.nationality}</li>
+                      <li><b>Height:</b> {player.player.height}</li>
+                      <li><b>Weight:</b> {player.player.weight}</li>
+                      <li><b>Position:</b> {player.statistics[0].games.position}</li>
+                    </ul>
+                  </PlayerBio>
+
+                  <ChartContainer>
+                    <ChartPage playerId={player.player.id} />
+                  </ChartContainer>
+
+                </PlayerContainer>
+                      
                 <ul>
+                <h1>Statistics:</h1>
                   {player.statistics.map((team, index) => (
                     <List key={index}>
                       <p><b>Team:</b> {team.team.name}</p>
