@@ -1,63 +1,64 @@
 import { useState, useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';
+import { playersStatisticsApi } from 'api/playersStatistics';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import { PlayerData } from 'pages/index';
+import { combinePlayerCompetitionData } from 'helpers/formatting';
 
+ChartJS.register(ArcElement, Tooltip, Legend);
 interface ChartData {
   label: string;
   value: number;
 }
 
-function ChartPage() {
-  const [data, setData] = useState<ChartData[]>([]);
-  const [chart, setChart] = useState<Chart | null>(null);
-  const chartRef = useRef<HTMLCanvasElement>(null);
+interface PlayerChartData {
+  goals: number;
+  fouls: number;
+  shots: number;
+  dribbles: number;
+  bookings: number;
+  sentOff: number;
+}
 
+interface ChartPageInterface {
+  playerId: number
+}
+
+function ChartPage({ playerId }: ChartPageInterface) {
+  const [playerData, setPlayerData] = useState<PlayerChartData | null>(null);
+  const chartData = {
+    labels: ['Goals', 'Fouls', 'Shots', 'Dribbles', 'Yellows', 'Reds'],
+    datasets: [
+      {
+        label: '# of Data',
+        data: playerData ? [playerData.goals, playerData.fouls, playerData.shots, playerData.dribbles, playerData.bookings, playerData.sentOff] : [],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('https://api-football-v1.p.rapidapi.com/v3/players', {
-        headers: {
-          'X-RapidAPI-Key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
-          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
-      });
-      const data = await response.json();
-      setData(data);
+      const { data } = await playersStatisticsApi.getDataByPlayerId(playerId.toString());
+      setPlayerData(combinePlayerCompetitionData(data.response[0]));
     }
 
     fetchData();
-  }, []);
+  }, [playerId]);
 
-  useEffect(() => {
-    if (chartRef.current && data.length > 0) {
-      const chartObj = new Chart(chartRef.current, {
-        type: 'bar',
-        data: {
-          labels: data.map((d) => d.label),
-          datasets: [
-            {
-              label: 'Chart Data',
-              data: data.map((d) => d.value),
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            title: {
-              display: true,
-              text: 'Chart Title',
-            },
-          },
-        },
-      });
-      setChart(chartObj);
-    }
-  }, [chartRef, data]);
-
+  console.log(chartData)
   return (
     <div>
-      <canvas ref={chartRef}></canvas>
-      {chart && <button onClick={() => chart.update()}>Update chart</button>}
+      <Doughnut data={chartData} />
     </div>
   );
 }
-
 export default ChartPage;

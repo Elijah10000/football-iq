@@ -7,7 +7,7 @@ async function getStatisticsByPlayerId(playerId: string): Promise<AxiosResponse<
         {
             params: { id: playerId, season: '2022' },
             headers: {
-                'X-RapidAPI-Key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
+                'X-RapidAPI-Key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4', //TODO Move to env file/
                 'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
             }
         }
@@ -15,11 +15,11 @@ async function getStatisticsByPlayerId(playerId: string): Promise<AxiosResponse<
     return response;
 }
 
-async function getDataByPlayerId(playerDataId: string): Promise<AxiosResponse<any>> {
+async function getDataByPlayerId(playerId: string): Promise<AxiosResponse<any>> {
     const response: AxiosResponse<any> = await axios.get(
         `https://api-football-v1.p.rapidapi.com/v3/players`,
         {
-            params: { id: playerDataId, season: '2022' },
+            params: { id: playerId, season: '2022' },
             headers: {
                 'X-RapidAPI-Key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
                 'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'

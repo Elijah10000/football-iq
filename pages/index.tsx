@@ -152,9 +152,7 @@ export default function Home({ players, team, leagues }: IHome) {
       setPlayerData1(
         data1.response.data
       );
-  
-      console.log(data1.response.data)
-  
+    
       setIsPlayStatModalOpen(true);
     } catch (error) {
       console.log(error);
@@ -203,7 +201,7 @@ export default function Home({ players, team, leagues }: IHome) {
 
             {playerData.map((player, index) => (
               <Bio key={index}>
-                <ChartPage />
+                <ChartPage playerId={player.player.id} />
                 <h1>{player.player.name}</h1>
                 <img src={player.player.photo} />
                 <li><b>Age:</b> {player.player.age}</li>
