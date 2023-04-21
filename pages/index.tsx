@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
@@ -50,12 +50,17 @@ type league = {
 
 type PlayerData = {
   player: {
+    nationality: ReactNode
+    height: ReactNode
+    weight: ReactNode
+    number: ReactNode
     id: number;
     name: string;
     age: number;
     photo: string;
   };
   statistics: {
+    map(arg0: (team: any, index: any) => JSX.Element): React.ReactNode
     team: {
       id: number;
       name: string;
@@ -210,13 +215,17 @@ export default function Home({ players, team, leagues }: IHome) {
                     <ul>
                       <li><b>Age:</b> {player.player.age}</li>
                       <li><b>Nationality:</b> {player.player.nationality}</li>
+                      <li><b>Team:</b> {player.statistics[0].team.name}</li>
                       <li><b>Height:</b> {player.player.height}</li>
                       <li><b>Weight:</b> {player.player.weight}</li>
                       <li><b>Position:</b> {player.statistics[0].games.position}</li>
+
+
                     </ul>
                   </PlayerBio>
 
                   <ChartContainer>
+                    <h1>Key Stats</h1>
                     <ChartPage playerId={player.player.id} />
                   </ChartContainer>
 
@@ -305,10 +314,8 @@ export default function Home({ players, team, leagues }: IHome) {
             <Player key={player.id} onClick={() => handlePlayerClick(player.id)}>
               <PlayerPhoto src={player.photo} />
               <PlayerStatsList isDarkMode={isDarkMode}>
-                <li>{`Name: ${player.name}`}</li>
-                <li>{`Number:  ${player.number}`}</li>
-                <li>{`Age:  ${player.age}`}</li>
-                <li>{`Position: ${player.position}`}</li>
+               {`${player.name}`}
+
               </PlayerStatsList>
             </Player>
           );

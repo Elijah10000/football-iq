@@ -17,8 +17,12 @@ interface PlayerChartData {
   fouls: number;
   shots: number;
   dribbles: number;
-  bookings: number;
-  sentOff: number;
+  duels: number;
+  passes: number;
+  tackles: number;
+  cards: number;
+  penalty: number;
+  substitutes: number;
 }
 
 interface ChartPageInterface {
@@ -28,11 +32,22 @@ interface ChartPageInterface {
 function ChartPage({ playerId }: ChartPageInterface) {
   const [playerData, setPlayerData] = useState<PlayerChartData | null>(null);
   const chartData = {
-    labels: ['Goals', 'Fouls', 'Shots', 'Dribbles', 'Yellows', 'Reds'],
+    labels: ['Goals', 'Fouls', 'Shots', 'Dribbles', 'Passes', 'Tackles', 'Duels', 'Cards', 'Penalties', 'Substitutes'],
     datasets: [
       {
-        label: ' ',
-        data: playerData ? [playerData.goals, playerData.fouls, playerData.shots, playerData.dribbles, playerData.bookings, playerData.sentOff] : [],
+        label: 'Player statistics',
+        data: [
+          playerData?.goals ?? 0,
+          playerData?.fouls ?? 0,
+          playerData?.shots ?? 0,
+          playerData?.dribbles ?? 0,
+          playerData?.passes ?? 0,
+          playerData?.tackles ?? 0,
+          playerData?.duels ?? 0,
+          playerData?.cards ?? 0,
+          playerData?.penalty ?? 0,
+          playerData?.substitutes ?? 0,
+        ],
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
           'rgba(54, 162, 235, 0.6)',
@@ -45,19 +60,22 @@ function ChartPage({ playerId }: ChartPageInterface) {
       },
     ],
   };
+
   useEffect(() => {
     async function fetchData() {
       const { data } = await playersStatisticsApi.getDataByPlayerId(playerId.toString());
-      setPlayerData(combinePlayerCompetitionData(data.response[0]));
-    }
-
+      if (data.response.length > 0) {
+        setPlayerData(combinePlayerCompetitionData(data.response[0]));
+      }
+          }
     fetchData();
   }, [playerId]);
 
-  console.log(chartData)
+  console.log(chartData);
+  
   return (
     <div>
-      <Doughnut data={chartData}/>
+      <Doughnut data={chartData} />
     </div>
   );
 }

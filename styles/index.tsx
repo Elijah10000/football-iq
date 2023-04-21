@@ -135,10 +135,18 @@ export const PlayerContainer = styled.div`
 export const PlayerBio = styled.div`
   max-width: 30%;
   margin-left: 18%;
+
+  h1 {
+    text-align: center;
+  }
 `;
 
 export const ChartContainer = styled.div`
   width: 30%;
   margin-left: 18%;
-  margin-top: 3%;
+  margin-top: 0%;
+
+h1 {
+  text-align: center;
+}
 `;
