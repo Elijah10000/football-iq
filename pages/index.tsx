@@ -5,12 +5,13 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
+import { teamStatisticsApi } from 'api/teamStatistics'
 import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
-import DarkMode from '../components/DarkMode';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
+import type { TeamData } from 'api/teamStatistics';
 import styled from 'styled-components'
 import Hamburger from 'components/hamburgerBar'
 import { ModalComponent } from 'components/Modal'
@@ -121,6 +122,7 @@ export default function Home({ players, team, leagues }: IHome) {
   const [selectedPlayers, setSelectedPlayers] = useState<player[]>([])
   const [teams, setTeams] = useState<Team[]>();
   const [playerData, setPlayerData] = useState<PlayerData[]>([]);
+  const [teamData, setTeamData] =  useState<TeamData[]>([]);
   const [playerData1, setPlayerData1] = useState<PlayerData[]>([]);
   const [isPlayStatModalOpen, setIsPlayStatModalOpen] = useState(false);
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -164,6 +166,15 @@ export default function Home({ players, team, leagues }: IHome) {
       setIsPlayStatModalOpen(false);
     }
   };  
+
+
+  const handleTeamLogoClick = async (id: number) => {
+    try {
+      const { data } = await teamStatisticsApi.getTeamStatisticsById(id);
+      setTeamData(data.response[0].team);
+    } catch (error) {
+    }
+}
 
   const customStyles = {
     control: (provided: any, state: { isDarkMode: any }) => ({
@@ -284,15 +295,14 @@ export default function Home({ players, team, leagues }: IHome) {
           <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
         </DropdownDiv>
 
-        {selectedTeam && !teams && (
-          <TeamCrest>
-            <img src={selectedTeam.logo} alt={selectedTeam.name} />
-            <ClubTeamName isDarkMode={isDarkMode}>{selectedTeam.name}</ClubTeamName>
+        {Array.isArray(teamData) && teamData.length > 0 && teamData.map((team: TeamData) => (
+          <TeamCrest key={team.id}>
+              <img src={team.logo} alt={team.name} onClick={() => handleTeamLogoClick(team.id)} />
+              <ClubTeamName isDarkMode={isDarkMode}>{team.name}</ClubTeamName>
           </TeamCrest>
-        )}
+        ))}
 
       </LogoDiv>
-
           
       {selectedLeague && (
         <h3>{selectedLeague.label}</h3>

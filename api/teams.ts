@@ -2,6 +2,7 @@ import axios from "axios";
 import type { AxiosResponse } from "axios";
 
 export interface Team {
+    logo: string | undefined;
     id: Key | null | undefined;
     name: ReactNode;
     team: {
