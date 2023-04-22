@@ -15,7 +15,7 @@ export const HamburgerButton = styled.button<{ isOpen: boolean; isDarkMode?: boo
   position: relative;
   cursor: pointer;
   border: none;
-  
+
   &::before,
   &::after,
   span {

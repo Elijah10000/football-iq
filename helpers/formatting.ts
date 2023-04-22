@@ -35,7 +35,6 @@ interface GamesData {
 }
 
 interface SubstitutesData {
-    total: number;
     in: number;
     out: number;
     bench: number;
@@ -46,8 +45,7 @@ interface ShotsData {
     on: number;
 }
 
-interface CardsData{
-    total: number;
+interface CardsData {
     yellow: number;
     yellowred: number;
     red: number;
@@ -61,21 +59,18 @@ interface GoalsData {
 }
 
 interface PassesData {
-    success: number;
     total: number;
     key: number;
     accuracy: number;
 }
 
 interface TacklesData {
-    committed: number;
     total: number;
     blocks: number | null;
     interceptions: number;
 }
 
 interface DuelsData {
-    success: number;
     total: number;
     won: number;
 }
@@ -154,7 +149,6 @@ function combinePlayerCompetitionData(players: PlayerData) {
 
     const passesTotal = passes.reduce((accumulator, currentValue) => {
         return {
-            success: accumulator.success + currentValue.success,
             total: accumulator.total + currentValue.total,
             key: (accumulator.key ?? 0) + (currentValue.key ?? 0),
             accuracy: (accumulator.accuracy ?? 0) + (currentValue.accuracy ?? 0),
@@ -163,7 +157,6 @@ function combinePlayerCompetitionData(players: PlayerData) {
 
     const tacklesTotal = tackles.reduce((accumulator, currentValue) => {
         return {
-            committed: accumulator.committed + currentValue.committed,
             total: accumulator.total + currentValue.total,
             blocks: (accumulator.blocks ?? 0) + (currentValue.blocks ?? 0),
             interceptions: (accumulator.interceptions ?? 0) + (currentValue.interceptions ?? 0),
@@ -172,7 +165,6 @@ function combinePlayerCompetitionData(players: PlayerData) {
 
     const duelsTotal = duels.reduce((accumulator, currentValue) => {
         return {
-            success: accumulator.success + currentValue.total,
             won: (accumulator.won ?? 0) + (currentValue.won ?? 0),
             total: (accumulator.total ?? 0) + (currentValue.total ?? 0),
         };
@@ -180,7 +172,6 @@ function combinePlayerCompetitionData(players: PlayerData) {
 
     const cardsTotal = cards.reduce((accumulator, currentValue) => {
         return {
-            total: accumulator.total + currentValue.total,
             yellow: (accumulator.yellow ?? 0) + (currentValue.yellow ?? 0),
             yellowred: (accumulator.yellowred ?? 0) + (currentValue.yellowred ?? 0),
             red: (accumulator.red ?? 0) + (currentValue.red ?? 0),
@@ -189,7 +180,6 @@ function combinePlayerCompetitionData(players: PlayerData) {
 
     const substitutesTotal = substitutes.reduce((accumulator, currentValue) => {
         return {
-            total: accumulator.total + currentValue.total,
             bench: (accumulator.bench ?? 0) + (currentValue.bench ?? 0),
             in: (accumulator.in ?? 0) + (currentValue.in ?? 0),
             out: (accumulator.out ?? 0) + (currentValue.out ?? 0),
@@ -200,15 +190,15 @@ function combinePlayerCompetitionData(players: PlayerData) {
     {
         goals: goalsTotal.total ?? 0,
         fouls: foulsTotal.committed ?? 0,
-        shots: shotsTotal.total ?? 0,
+        shots: shotsTotal.on ?? 0,
         dribbles: dribblesTotal.success ?? 0,
-        cards: cardsTotal.total ?? 0,
-        passes: passesTotal.success ?? 0,
-        tackles: tacklesTotal.committed ?? 0,
-        duels: duelsTotal.success ?? 0,
-        substitutes: substitutesTotal.total ?? 0,
-        
+        cards: cardsTotal.yellow ?? 0,
+        passes: passesTotal.key ?? 0,
+        tackles: tacklesTotal.total ?? 0,
+        duels: duelsTotal.won ?? 0,
+        substitutes: substitutesTotal.in ?? 0,
     };
+
+    return data;
 };
 export { combinePlayerCompetitionData };
-    

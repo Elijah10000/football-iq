@@ -38,6 +38,7 @@ interface DropdownDivProps {
 export const DropdownDiv = styled.div<DropdownDivProps>`
   background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
   margin-bottom: 3%;
+  width: 10%;
 `;
 
 export const TeamCrest = styled.div`
@@ -55,17 +56,25 @@ export const TeamCrest = styled.div`
 export const TeamName = styled.span<DropdownDivProps>`
   color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
   padding-bottom: 12px;
-  text-align: center;
+
 `;
 
 export const ClubTeamName = styled.span<DropdownDivProps>`
   color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
-  padding-bottom: 12px;
-  text-align: center;
 `;
 
 export const TeamImage = styled.img`
   cursor: pointer;
+  display: block;
+  border: 2px solid #ccc;
+  border-radius: 90px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    border: 2px solid #0077ff;
+  }
 `;
 
 export const PlayersList = styled.ul`
@@ -97,6 +106,10 @@ export const PlayerStatsList = styled.ul<{ isDarkMode?: boolean }>`
   padding:0;
 `;
 
+ export const PlayerName = styled.div`
+    margin-top: 5%;
+`;
+
 export const StatisticsList = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -122,7 +135,17 @@ export const PlayerData = styled.div`
 `;
 
 export const PlayerPhoto = styled.img`
-    border-radius: 50%;
+  border-radius: 50%;
+  display: block;
+  border: 2px solid #ccc;
+  border-radius: 90px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    border: 2px solid #0077ff;
+  }
 `;
 
 export const PlayerStatsDiv = styled.div`

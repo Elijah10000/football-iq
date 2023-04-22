@@ -5,7 +5,7 @@ import { playersApi } from '../api/players'
 import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import DarkMode from '../components/DarkMode';
@@ -293,6 +293,7 @@ export default function Home({ players, team, leagues }: IHome) {
 
       </LogoDiv>
 
+          
       {selectedLeague && (
         <h3>{selectedLeague.label}</h3>
       )}
@@ -314,8 +315,7 @@ export default function Home({ players, team, leagues }: IHome) {
             <Player key={player.id} onClick={() => handlePlayerClick(player.id)}>
               <PlayerPhoto src={player.photo} />
               <PlayerStatsList isDarkMode={isDarkMode}>
-               {`${player.name}`}
-
+               <PlayerName>{`${player.name}`}</PlayerName>
               </PlayerStatsList>
             </Player>
           );

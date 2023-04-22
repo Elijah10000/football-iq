@@ -1,16 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Chart } from 'chart.js/auto';
 import { playersStatisticsApi } from 'api/playersStatistics';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { PlayerData } from 'pages/index';
-import { combinePlayerCompetitionData } from 'helpers/formatting';
+import { combinePlayerCompetitionData }  from "helpers/formatting";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-interface ChartData {
-  label: string;
-  value: number;
-}
 
 interface PlayerChartData {
   goals: number;
@@ -35,7 +29,7 @@ function ChartPage({ playerId }: ChartPageInterface) {
     labels: ['Goals', 'Fouls', 'Shots', 'Dribbles', 'Passes', 'Tackles', 'Duels', 'Cards', 'Penalties', 'Substitutes'],
     datasets: [
       {
-        label: 'Player statistics',
+        label: '',
         data: [
           playerData?.goals ?? 0,
           playerData?.fouls ?? 0,
@@ -55,6 +49,10 @@ function ChartPage({ playerId }: ChartPageInterface) {
           'rgba(75, 192, 192, 0.6)',
           'rgba(153, 102, 255, 0.6)',
           'rgba(255, 159, 64, 0.6)',
+          'rgba(255, 35, 35, 0.6)',
+          'rgba(0, 128, 0, 0.6)', 
+          'rgba(255, 0, 255, 0.6)',
+          'rgba(255, 140, 0, 0.6)', 
         ],
         borderWidth: 1,
       },
@@ -65,7 +63,7 @@ function ChartPage({ playerId }: ChartPageInterface) {
     async function fetchData() {
       const { data } = await playersStatisticsApi.getDataByPlayerId(playerId.toString());
       if (data.response.length > 0) {
-        setPlayerData(combinePlayerCompetitionData(data.response[0]));
+        data && setPlayerData(combinePlayerCompetitionData(data.response[0]));
       }
           }
     fetchData();
@@ -74,7 +72,7 @@ function ChartPage({ playerId }: ChartPageInterface) {
   console.log(chartData);
   
   return (
-    <div>
+    <div style={{ width: '400px', height: '400px' }}>
       <Doughnut data={chartData} />
     </div>
   );
