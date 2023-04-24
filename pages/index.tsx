@@ -331,10 +331,8 @@ export default function Home({ players, team, leagues }: IHome) {
               <h3>Goals For - Home: </h3>{teamData.goals.for.total.home}
               <h3>Goals For - Away: </h3>{teamData.goals.for.total.away}
               <h3>Goals For - Total: </h3>{teamData.goals.for.total.total}
-              <h3>Lineup Formation 1: </h3>{teamData.lineups[0].formation}
+              <h3>Most Popular Formation: </h3>{teamData.lineups[0].formation}
               <h3>Times Played: </h3> {teamData.lineups[0].played}
-              <h3>Lineup Formation 2: </h3>{teamData.lineups[1].formation}
-              <h3>Times Played: </h3> {teamData.lineups[1].played}
               <h3>Penalties: </h3>{teamData.penalty.total}
               <h3>Penalties Scored Percentage: </h3>{teamData.penalty.scored.percentage}
               <h3>Penalties Scored Total: </h3>{teamData.penalty.scored.total}
