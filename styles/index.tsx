@@ -59,6 +59,7 @@ export const TeamCrest = styled.div`
 
   &:hover {
     border: 2px solid #0077ff;
+    cursor: pointer;
   }
 }
 `;
@@ -74,7 +75,6 @@ export const ClubTeamName = styled.span<DropdownDivProps>`
 `;
 
 export const TeamImage = styled.img`
-  cursor: pointer;
   display: block;
   border: 2px solid #ccc;
   border-radius: 90px;
@@ -84,6 +84,7 @@ export const TeamImage = styled.img`
 
   &:hover {
     border: 2px solid #0077ff;
+    cursor: pointer;
   }
 `;
 
@@ -155,6 +156,7 @@ export const PlayerPhoto = styled.img`
 
   &:hover {
     border: 2px solid #0077ff;
+    cursor: pointer;
   }
 `;
 

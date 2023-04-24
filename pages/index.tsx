@@ -126,6 +126,11 @@ export default function Home({ players, team, leagues }: IHome) {
   const [playerData1, setPlayerData1] = useState<PlayerData[]>([]);
   const [isPlayStatModalOpen, setIsPlayStatModalOpen] = useState(false);
   const [isTeamStatModalOpen, setIsTeamStatModalOpen] = useState(false);
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, [selectedPlayers])
+
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   }
@@ -146,6 +151,7 @@ export default function Home({ players, team, leagues }: IHome) {
       setTeams(undefined);
       setSelectedPlayers(data.response[0].players);
       setSelectedTeam(data.response[0].team)
+      // window.scrollTo(0, 0);
     } catch (error) {
     }
   }
@@ -384,7 +390,7 @@ export default function Home({ players, team, leagues }: IHome) {
               </PlayerStatsList>
             </Player>
           );
-        })}
+        }).sort()}
       </PlayersList>
     </Container>
   )
