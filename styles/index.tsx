@@ -43,20 +43,30 @@ export const DropdownDiv = styled.div<DropdownDivProps>`
 
 export const TeamCrest = styled.div`
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
+    
   img {
-      width: 150px;
-      height: 150px;
+  width: 170px;
+  height: 170px;
+  border: 2px solid #ccc;
+  border-radius: 90px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    border: 2px solid #0077ff;
   }
+}
 `;
 
 export const TeamName = styled.span<DropdownDivProps>`
   color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
-  padding-bottom: 12px;
-
+  padding-top: 15px;
+  font-size: 20px;
 `;
 
 export const ClubTeamName = styled.span<DropdownDivProps>`
@@ -106,7 +116,7 @@ export const PlayerStatsList = styled.ul<{ isDarkMode?: boolean }>`
   padding:0;
 `;
 
- export const PlayerName = styled.div`
+export const PlayerName = styled.div`
     margin-top: 5%;
 `;
 
@@ -163,6 +173,18 @@ export const PlayerBio = styled.div`
     text-align: center;
   }
 `;
+
+export const TeamStats = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px 0;
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }`;
 
 export const ChartContainer = styled.div`
   width: 30%;

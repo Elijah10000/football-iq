@@ -6,7 +6,7 @@ import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
 import { teamStatisticsApi } from 'api/teamStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, ClubTeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import { useGlobalContext } from 'contexts/GlobalContext';
@@ -117,14 +117,15 @@ const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
 
 export default function Home({ players, team, leagues }: IHome) {
   const { isDarkMode } = useGlobalContext();
-  const [selectedLeague, setSelectedLeague] = useState<LeagueNames | null>(null);
-  const [selectedTeam, setSelectedTeam] = useState<team>(team);
+  const [selectedLeague, setSelectedLeague] = useState<string>();
+  const [selectedTeam, setSelectedTeam] = useState<team | undefined>(team);
   const [selectedPlayers, setSelectedPlayers] = useState<player[]>([])
   const [teams, setTeams] = useState<Team[]>();
   const [playerData, setPlayerData] = useState<PlayerData[]>([]);
-  const [teamData, setTeamData] =  useState<TeamData[]>([]);
+  const [teamData, setTeamData] = useState<TeamData>([]);
   const [playerData1, setPlayerData1] = useState<PlayerData[]>([]);
   const [isPlayStatModalOpen, setIsPlayStatModalOpen] = useState(false);
+  const [isTeamStatModalOpen, setIsTeamStatModalOpen] = useState(false);
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   }
@@ -133,6 +134,8 @@ export default function Home({ players, team, leagues }: IHome) {
     try {
       const { data } = await teamsApi.getTeamsByLeagueId(id);
       setTeams(data.response);
+      setSelectedLeague(id)
+      setSelectedTeam(undefined);
     } catch (error) {
     }
   }
@@ -151,30 +154,34 @@ export default function Home({ players, team, leagues }: IHome) {
     try {
       const { data } = await playersStatisticsApi.getStatisticsByPlayerId(id.toString());
       const { data: data1 } = await playersStatisticsApi.getDataByPlayerId(id.toString());
-  
+
       setPlayerData(
         data.response,
       );
-  
+
       setPlayerData1(
         data1.response.data
       );
-    
+
       setIsPlayStatModalOpen(true);
     } catch (error) {
       console.log(error);
       setIsPlayStatModalOpen(false);
     }
-  };  
+  };
 
 
-  const handleTeamLogoClick = async (id: number) => {
+  const handleTeamLogoClick = async (teamId: string, leagueId: string) => {
     try {
-      const { data } = await teamStatisticsApi.getTeamStatisticsById(id);
-      setTeamData(data.response[0].team);
+      const { data } = await teamStatisticsApi.getTeamStatisticsById(teamId, leagueId);
+      setTeamData(data.response);
+
+      setIsTeamStatModalOpen(true);
     } catch (error) {
+      console.log(error);
+      setIsTeamStatModalOpen(false)
     }
-}
+  }
 
   const customStyles = {
     control: (provided: any, state: { isDarkMode: any }) => ({
@@ -206,6 +213,8 @@ export default function Home({ players, team, leagues }: IHome) {
     })
   };
 
+  console.log(teamData)
+
   return (
     <Container isDarkMode={isDarkMode}>
       <Hamburger />
@@ -217,7 +226,7 @@ export default function Home({ players, team, leagues }: IHome) {
 
             {playerData.map((player, index) => (
               <Bio key={index}>
-               
+
                 <PlayerContainer>
 
                   <PlayerBio>
@@ -241,9 +250,9 @@ export default function Home({ players, team, leagues }: IHome) {
                   </ChartContainer>
 
                 </PlayerContainer>
-                      
+
                 <ul>
-                <h1>Statistics:</h1>
+                  <h1>Statistics:</h1>
                   {player.statistics.map((team, index) => (
                     <List key={index}>
                       <p><b>Team:</b> {team.team.name}</p>
@@ -285,6 +294,56 @@ export default function Home({ players, team, leagues }: IHome) {
           </ModalComponent>
         )}
 
+        {isTeamStatModalOpen && (
+          <ModalComponent isOpen={isTeamStatModalOpen} onRequestClose={() => setIsTeamStatModalOpen(false)}>
+            <TeamStats>
+              <h3>Country: </h3>{teamData.league.country}
+              <h3>League: </h3>{teamData.league.name}
+              <h3>Team: </h3>{teamData.team.name}
+              <h3>Most Goals Against - Home: </h3>{teamData.biggest.goals.against.home}
+              <h3>Most Goals Against - Away: </h3>{teamData.biggest.goals.against.away}
+              <h3>Most Goals For - Home: </h3>{teamData.biggest.goals.for.home}
+              <h3>Most Goals For - Away: </h3>{teamData.biggest.goals.for.away}
+              <h3>Biggest Victory - Home: </h3>{teamData.biggest.wins.home}
+              <h3>Biggest Victory - Away: </h3>{teamData.biggest.wins.away}
+              <h3>Biggest Loss - Home: </h3>{teamData.biggest.loses.home}
+              <h3>Biggest Loss - Away: </h3>{teamData.biggest.loses.away}
+              <h3>Clean Sheets - Home </h3>{teamData.clean_sheet.home}
+              <h3>Clean Sheets - Away: </h3>{teamData.clean_sheet.away}
+              <h3>Clean Sheets - Total: </h3>{teamData.clean_sheet.total}
+              <h3>Failed to Score - Home: </h3>{teamData.failed_to_score.home}
+              <h3>Failed to Score - Away: </h3>{teamData.failed_to_score.away}
+              <h3>Failed to Score - Total: </h3>{teamData.failed_to_score.total}
+              <h3>Games Played: </h3>{teamData.fixtures.played.total}
+              <h3>Total Wins: </h3>{teamData.fixtures.wins.total}
+              <h3>Total Loses: </h3>{teamData.fixtures.loses.total}
+              <h3>Total Draws: </h3>{teamData.fixtures.draws.total}
+              <h3>Current Form: </h3>{teamData.form}
+              <h3>Goals Against Average - Home: </h3>{teamData.goals.against.average.home}
+              <h3>Goals Against Average - Away: </h3>{teamData.goals.against.average.away}
+              <h3>Goals Against Average - Total: </h3>{teamData.goals.against.average.total}
+              <h3>Goals Against - Home: </h3>{teamData.goals.against.total.home}
+              <h3>Goals Against - Away: </h3>{teamData.goals.against.total.away}
+              <h3>Goals Against - Total: </h3>{teamData.goals.against.total.total}
+              <h3>Goals For Average - Home: </h3>{teamData.goals.for.average.home}
+              <h3>Goals For Average - Away: </h3>{teamData.goals.for.average.away}
+              <h3>Goals For Average - Total: </h3>{teamData.goals.for.average.total}
+              <h3>Goals For - Home: </h3>{teamData.goals.for.total.home}
+              <h3>Goals For - Away: </h3>{teamData.goals.for.total.away}
+              <h3>Goals For - Total: </h3>{teamData.goals.for.total.total}
+              <h3>Lineup Formation 1: </h3>{teamData.lineups[0].formation}
+              <h3>Times Played: </h3> {teamData.lineups[0].played}
+              <h3>Lineup Formation 2: </h3>{teamData.lineups[1].formation}
+              <h3>Times Played: </h3> {teamData.lineups[1].played}
+              <h3>Penalties: </h3>{teamData.penalty.total}
+              <h3>Penalties Scored Percentage: </h3>{teamData.penalty.scored.percentage}
+              <h3>Penalties Scored Total: </h3>{teamData.penalty.scored.total}
+              <h3>Penalties missed Percentage: </h3>{teamData.penalty.missed.percentage}
+              <h3>Penalties missed Total: </h3>{teamData.penalty.missed.total}
+            </TeamStats>
+          </ModalComponent>
+        )}
+
       </PlayerStatsDiv>
 
       <LogoDiv>
@@ -295,18 +354,16 @@ export default function Home({ players, team, leagues }: IHome) {
           <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
         </DropdownDiv>
 
-        {Array.isArray(teamData) && teamData.length > 0 && teamData.map((team: TeamData) => (
-          <TeamCrest key={team.id}>
-              <img src={team.logo} alt={team.name} onClick={() => handleTeamLogoClick(team.id)} />
-              <ClubTeamName isDarkMode={isDarkMode}>{team.name}</ClubTeamName>
-          </TeamCrest>
-        ))}
-
       </LogoDiv>
-          
-      {selectedLeague && (
-        <h3>{selectedLeague.label}</h3>
-      )}
+
+      <TeamCrest>
+        {selectedTeam && selectedLeague && (
+          <>
+            <img src={selectedTeam.logo} alt={selectedTeam.name} onClick={() => handleTeamLogoClick(selectedTeam.id.toString(), selectedLeague)} />
+            <TeamName isDarkMode={isDarkMode}>{selectedTeam.name}</TeamName>
+          </>
+        )}
+      </TeamCrest>
 
       <PlayersList>
         {teams && teams?.length > 0 && teams.map((team: Team) => {
@@ -325,7 +382,7 @@ export default function Home({ players, team, leagues }: IHome) {
             <Player key={player.id} onClick={() => handlePlayerClick(player.id)}>
               <PlayerPhoto src={player.photo} />
               <PlayerStatsList isDarkMode={isDarkMode}>
-               <PlayerName>{`${player.name}`}</PlayerName>
+                <PlayerName>{`${player.name}`}</PlayerName>
               </PlayerStatsList>
             </Player>
           );
