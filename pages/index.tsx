@@ -6,7 +6,7 @@ import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
 import { teamStatisticsApi } from 'api/teamStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1 } from 'styles/index'
 import { useState, useEffect } from 'react'
 import Select, { components } from 'react-select';
 import { useGlobalContext } from 'contexts/GlobalContext';
@@ -127,10 +127,6 @@ export default function Home({ players, team, leagues }: IHome) {
   const [isPlayStatModalOpen, setIsPlayStatModalOpen] = useState(false);
   const [isTeamStatModalOpen, setIsTeamStatModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-  // }, [selectedPlayers])
-
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   }
@@ -151,7 +147,6 @@ export default function Home({ players, team, leagues }: IHome) {
       setTeams(undefined);
       setSelectedPlayers(data.response[0].players);
       setSelectedTeam(data.response[0].team)
-      // window.scrollTo(0, 0);
     } catch (error) {
     }
   }
@@ -245,8 +240,6 @@ export default function Home({ players, team, leagues }: IHome) {
                       <li><b>Height:</b> {player.player.height}</li>
                       <li><b>Weight:</b> {player.player.weight}</li>
                       <li><b>Position:</b> {player.statistics[0].games.position}</li>
-
-
                     </ul>
                   </PlayerBio>
 
@@ -288,7 +281,7 @@ export default function Home({ players, team, leagues }: IHome) {
                       <p><b>Penalties saved:</b> {team.penalty.saved}</p>
                       <p><b>Penalties conceded:</b> {team.penalty.conceded}</p>
                       <p><b>Penalties won:</b> {team.penalty.won}</p>
-                      <p><b>Penalties commited:</b> {team.penalty.committed}</p>
+                      <p><b>Penalties committed:</b> {team.penalty.committed}</p>
                       <p><b>Penalties success:</b> {team.penalty.success}</p>
                       <p><b></b> {team.fouls.drawn}</p>
                       <p><b>Fouls suffered:</b> {team.fouls.committed}</p>
@@ -303,47 +296,135 @@ export default function Home({ players, team, leagues }: IHome) {
         {isTeamStatModalOpen && (
           <ModalComponent isOpen={isTeamStatModalOpen} onRequestClose={() => setIsTeamStatModalOpen(false)}>
             <TeamStats>
-              <h3>Country: </h3>{teamData.league.country}
-              <h3>League: </h3>{teamData.league.name}
-              <h3>Team: </h3>{teamData.team.name}
-              <h3>Most Goals Against - Home: </h3>{teamData.biggest.goals.against.home}
-              <h3>Most Goals Against - Away: </h3>{teamData.biggest.goals.against.away}
-              <h3>Most Goals For - Home: </h3>{teamData.biggest.goals.for.home}
-              <h3>Most Goals For - Away: </h3>{teamData.biggest.goals.for.away}
-              <h3>Biggest Victory - Home: </h3>{teamData.biggest.wins.home}
-              <h3>Biggest Victory - Away: </h3>{teamData.biggest.wins.away}
-              <h3>Biggest Loss - Home: </h3>{teamData.biggest.loses.home}
-              <h3>Biggest Loss - Away: </h3>{teamData.biggest.loses.away}
-              <h3>Clean Sheets - Home </h3>{teamData.clean_sheet.home}
-              <h3>Clean Sheets - Away: </h3>{teamData.clean_sheet.away}
-              <h3>Clean Sheets - Total: </h3>{teamData.clean_sheet.total}
-              <h3>Failed to Score - Home: </h3>{teamData.failed_to_score.home}
-              <h3>Failed to Score - Away: </h3>{teamData.failed_to_score.away}
-              <h3>Failed to Score - Total: </h3>{teamData.failed_to_score.total}
-              <h3>Games Played: </h3>{teamData.fixtures.played.total}
-              <h3>Total Wins: </h3>{teamData.fixtures.wins.total}
-              <h3>Total Loses: </h3>{teamData.fixtures.loses.total}
-              <h3>Total Draws: </h3>{teamData.fixtures.draws.total}
-              <h3>Current Form: </h3>{teamData.form}
-              <h3>Goals Against Average - Home: </h3>{teamData.goals.against.average.home}
-              <h3>Goals Against Average - Away: </h3>{teamData.goals.against.average.away}
-              <h3>Goals Against Average - Total: </h3>{teamData.goals.against.average.total}
-              <h3>Goals Against - Home: </h3>{teamData.goals.against.total.home}
-              <h3>Goals Against - Away: </h3>{teamData.goals.against.total.away}
-              <h3>Goals Against - Total: </h3>{teamData.goals.against.total.total}
-              <h3>Goals For Average - Home: </h3>{teamData.goals.for.average.home}
-              <h3>Goals For Average - Away: </h3>{teamData.goals.for.average.away}
-              <h3>Goals For Average - Total: </h3>{teamData.goals.for.average.total}
-              <h3>Goals For - Home: </h3>{teamData.goals.for.total.home}
-              <h3>Goals For - Away: </h3>{teamData.goals.for.total.away}
-              <h3>Goals For - Total: </h3>{teamData.goals.for.total.total}
-              <h3>Most Popular Formation: </h3>{teamData.lineups[0].formation}
-              <h3>Times Played: </h3> {teamData.lineups[0].played}
-              <h3>Penalties: </h3>{teamData.penalty.total}
-              <h3>Penalties Scored Percentage: </h3>{teamData.penalty.scored.percentage}
-              <h3>Penalties Scored Total: </h3>{teamData.penalty.scored.total}
-              <h3>Penalties missed Percentage: </h3>{teamData.penalty.missed.percentage}
-              <h3>Penalties missed Total: </h3>{teamData.penalty.missed.total}
+              <img src={selectedTeam.logo} alt={selectedTeam.name} />
+              <div>
+                <h1>Key Statistics: </h1>
+              </div>
+              <div>
+                <h3>Team:</h3> <p>{teamData.team.name}</p>
+              </div>
+              <div>
+                <h3>Country:</h3> <p>{teamData.league.country}</p>
+              </div>
+              <div>
+                <h3>League:</h3> <p>{teamData.league.name}</p>
+              </div>
+              <div>
+                <h3>Current Form: </h3> <p>{teamData.form}</p>
+              </div>
+              <div>
+                <h3>Games Played: </h3> <p>{teamData.fixtures.played.total}</p>
+              </div>
+              <div>
+                <h3>Total Wins: </h3> <p>{teamData.fixtures.wins.total}</p>
+              </div>
+              <div>
+                <h3>Total Loses: </h3> <p>{teamData.fixtures.loses.total}</p>
+              </div>
+              <div>
+                <h3>Total Draws: </h3> <p>{teamData.fixtures.draws.total}</p>
+              </div>
+              <div>
+                <h3>Total Goals Scored: </h3> <p>{teamData.goals.for.total.total}</p>
+              </div>
+              <div>
+                <h3>Total Goals Conceded: </h3> <p>{teamData.goals.against.total.total}</p>
+              </div>
+              <div>
+                <h3>Total Clean Sheets: </h3> <p>{teamData.clean_sheet.total}</p>
+              </div>
+              <div>
+                <h3>Most Popular Formation: </h3> <p>{teamData.lineups[0].formation}</p> <p>{`(${teamData.lineups[0].played})`}</p>
+              </div>
+              <div>
+                <h2>Extra Statistics: </h2>
+              </div>
+              <Div1>
+              <div>
+                <h3>Most Goals Against - Home:</h3> <p>{teamData.biggest.goals.against.home}</p>
+              </div>
+              <div>
+                <h3>Most Goals Against - Away:</h3> <p>{teamData.biggest.goals.against.away}</p>
+              </div>
+              <div>
+                <h3>Most Goals For - Home: </h3> <p>{teamData.biggest.goals.for.home}</p>
+              </div>
+              <div>
+                <h3>Most Goals For - Away: </h3> <p>{teamData.biggest.goals.for.away}</p>
+              </div>
+              <div>
+                <h3>Biggest Victory - Home: </h3> <p>{teamData.biggest.wins.home}</p>
+              </div>
+              <div>
+                <h3>Biggest Victory - Away: </h3> <p>{teamData.biggest.wins.away}</p>
+              </div>
+              <div>
+                <h3>Biggest Loss - Home: </h3> <p>{teamData.biggest.loses.home}</p>
+              </div>
+              <div>
+                <h3>Biggest Loss - Away: </h3> <p>{teamData.biggest.loses.away}</p>
+              </div>
+              <div>
+                <h3>Clean Sheets - Home </h3> <p>{teamData.clean_sheet.home}</p>
+              </div>
+              <div>
+                <h3>Clean Sheets - Away: </h3> <p>{teamData.clean_sheet.away}</p>
+              </div>
+              <div>
+                <h3>Failed to Score - Home: </h3> <p>{teamData.failed_to_score.home}</p>
+              </div>
+              <div>
+                <h3>Failed to Score - Away: </h3> <p>{teamData.failed_to_score.away}</p>
+              </div>
+              <div>
+                <h3>Failed to Score - Total: </h3> <p>{teamData.failed_to_score.total}</p>
+              </div>
+              <div>
+                <h3>Goals Conceded Average - Home: </h3> <p>{teamData.goals.against.average.home}</p>
+              </div>
+              <div>
+                <h3>Goals Conceded Average - Away: </h3> <p>{teamData.goals.against.average.away}</p>
+              </div>
+              <div>
+                <h3>Goals Conceded Average - Total: </h3> <p>{teamData.goals.against.average.total}</p>
+              </div>
+              <div>
+                <h3>Goals Conceded - Home: </h3> <p>{teamData.goals.against.total.home}</p>
+              </div>
+              <div>
+                <h3>Goals Conceded - Away: </h3> <p>{teamData.goals.against.total.away}</p>
+              </div>
+              <div>
+                <h3>Goals Scored Average - Home: </h3> <p>{teamData.goals.for.average.home}</p>
+              </div>
+              <div>
+                <h3>Goals Scored Average - Away: </h3> <p>{teamData.goals.for.average.away}</p>
+              </div>
+              <div>
+                <h3>Goals Scored Average - Total: </h3> <p>{teamData.goals.for.average.total}</p>
+              </div>
+              <div>
+                <h3>Goals Scored - Home: </h3> <p>{teamData.goals.for.total.home}</p>
+              </div>
+              <div>
+                <h3>Goals Scored - Away: </h3> <p>{teamData.goals.for.total.away}</p>
+              </div>
+              <div>
+                <h3>Penalties: </h3> <p>{teamData.penalty.total}</p>
+              </div>
+              <div>
+                <h3>Penalties Scored Percentage: </h3> <p>{teamData.penalty.scored.percentage}</p>
+              </div>
+              <div>
+                <h3>Penalties Scored Total: </h3> <p>{teamData.penalty.scored.total}</p>
+              </div>
+              <div>
+                <h3>Penalties missed Percentage: </h3> <p>{teamData.penalty.missed.percentage}</p>
+              </div>
+              <div>
+                <h3>Penalties missed Total: </h3> <p>{teamData.penalty.missed.total}</p>
+              </div>
+              </Div1>
             </TeamStats>
           </ModalComponent>
         )}

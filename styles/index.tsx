@@ -78,10 +78,9 @@ export const TeamImage = styled.img`
   display: block;
   border: 2px solid #ccc;
   border-radius: 90px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   padding: 15px;
   transition: border 0.2s ease-in-out;
-
+  
   &:hover {
     border: 2px solid #0077ff;
     cursor: pointer;
@@ -177,16 +176,41 @@ export const PlayerBio = styled.div`
 `;
 
 export const TeamStats = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 20px 0;
+
+div {
+  text-align: center;
+}
 
   h3 {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
-  }`;
+    display: inline-block;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 32px;
+    margin-top: 50px;
+  }
+
+  p {
+    display: inline-block;
+    text-align: center;
+  }
+
+  img {
+  display: block;
+  margin: 0 auto;
+}
+`;
+
+export const Div1 = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+`;
 
 export const ChartContainer = styled.div`
   width: 30%;
