@@ -41,6 +41,16 @@ export const DropdownDiv = styled.div<DropdownDivProps>`
   width: 10%;
 `;
 
+interface SearchDivProps {
+  isDarkMode?: boolean;
+}
+
+export const SearchDiv = styled.div<SearchDivProps>`
+    background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
+  margin-bottom: 3%;
+  width: 10%;
+`;
+
 export const TeamCrest = styled.div`
   margin-top: 30px;
   margin-bottom: 60px;

@@ -6,9 +6,8 @@ import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
 import { teamStatisticsApi } from 'api/teamStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1 } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1, SearchDiv } from 'styles/index'
 import { useState, useEffect } from 'react'
-import Select, { components } from 'react-select';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
 import type { TeamData } from 'api/teamStatistics';
@@ -17,6 +16,7 @@ import Hamburger from 'components/hamburgerBar'
 import { ModalComponent } from 'components/Modal'
 import { List, Bio } from 'styles/modal-stats-style'
 import ChartPage from 'components/ChartPage';
+import Select from 'react-select';
 
 type team = {
   id: number;
@@ -115,6 +115,16 @@ const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
 `;
 
+// const SearchInput = styled(Select) <{ isDarkMode?: boolean }>`
+//   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+//   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
+// `;
+
+// const Search = styled(Select) <{ isDarkMode?: boolean }>`
+//   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+//   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
+// `;
+
 export default function Home({ players, team, leagues }: IHome) {
   const { isDarkMode } = useGlobalContext();
   const [selectedLeague, setSelectedLeague] = useState<string>();
@@ -184,6 +194,20 @@ export default function Home({ players, team, leagues }: IHome) {
     }
   }
 
+  // const handleSearchChange = (inputValue: string) => {
+  //   // Filter the leagues based on user input
+  //   const filteredLeagues = LeagueOptions.filter((league) =>
+  //     league.label.toLowerCase().includes(inputValue.toLowerCase())
+  //   );
+
+  //   // Combine the filtered leagues, teams, and players
+  //   const filteredOptions = [    { label: 'Leagues', options: filteredLeagues }];
+  
+  //   // Update the options in the dropdown
+  //   Dropdown(filteredOptions);
+  // };
+  
+
   const customStyles = {
     control: (provided: any, state: { isDarkMode: any }) => ({
       ...provided,
@@ -218,6 +242,11 @@ export default function Home({ players, team, leagues }: IHome) {
 
   return (
     <Container isDarkMode={isDarkMode}>
+
+      {/* <SearchDiv isDarkMode={isDarkMode}>
+        <Search onChange={(value: PlayerData) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
+      </SearchDiv> */}
+
       <Hamburger />
       <PlayerStatsDiv>
 
@@ -244,7 +273,7 @@ export default function Home({ players, team, leagues }: IHome) {
                   </PlayerBio>
 
                   <ChartContainer>
-                    <h1>Key Stats</h1>
+                    <h1>Key Statistics (All Comps) </h1>
                     <ChartPage playerId={player.player.id} />
                   </ChartContainer>
 
@@ -340,90 +369,90 @@ export default function Home({ players, team, leagues }: IHome) {
                 <h2>Extra Statistics: </h2>
               </div>
               <Div1>
-              <div>
-                <h3>Most Goals Against - Home:</h3> <p>{teamData.biggest.goals.against.home}</p>
-              </div>
-              <div>
-                <h3>Most Goals Against - Away:</h3> <p>{teamData.biggest.goals.against.away}</p>
-              </div>
-              <div>
-                <h3>Most Goals For - Home: </h3> <p>{teamData.biggest.goals.for.home}</p>
-              </div>
-              <div>
-                <h3>Most Goals For - Away: </h3> <p>{teamData.biggest.goals.for.away}</p>
-              </div>
-              <div>
-                <h3>Biggest Victory - Home: </h3> <p>{teamData.biggest.wins.home}</p>
-              </div>
-              <div>
-                <h3>Biggest Victory - Away: </h3> <p>{teamData.biggest.wins.away}</p>
-              </div>
-              <div>
-                <h3>Biggest Loss - Home: </h3> <p>{teamData.biggest.loses.home}</p>
-              </div>
-              <div>
-                <h3>Biggest Loss - Away: </h3> <p>{teamData.biggest.loses.away}</p>
-              </div>
-              <div>
-                <h3>Clean Sheets - Home </h3> <p>{teamData.clean_sheet.home}</p>
-              </div>
-              <div>
-                <h3>Clean Sheets - Away: </h3> <p>{teamData.clean_sheet.away}</p>
-              </div>
-              <div>
-                <h3>Failed to Score - Home: </h3> <p>{teamData.failed_to_score.home}</p>
-              </div>
-              <div>
-                <h3>Failed to Score - Away: </h3> <p>{teamData.failed_to_score.away}</p>
-              </div>
-              <div>
-                <h3>Failed to Score - Total: </h3> <p>{teamData.failed_to_score.total}</p>
-              </div>
-              <div>
-                <h3>Goals Conceded Average - Home: </h3> <p>{teamData.goals.against.average.home}</p>
-              </div>
-              <div>
-                <h3>Goals Conceded Average - Away: </h3> <p>{teamData.goals.against.average.away}</p>
-              </div>
-              <div>
-                <h3>Goals Conceded Average - Total: </h3> <p>{teamData.goals.against.average.total}</p>
-              </div>
-              <div>
-                <h3>Goals Conceded - Home: </h3> <p>{teamData.goals.against.total.home}</p>
-              </div>
-              <div>
-                <h3>Goals Conceded - Away: </h3> <p>{teamData.goals.against.total.away}</p>
-              </div>
-              <div>
-                <h3>Goals Scored Average - Home: </h3> <p>{teamData.goals.for.average.home}</p>
-              </div>
-              <div>
-                <h3>Goals Scored Average - Away: </h3> <p>{teamData.goals.for.average.away}</p>
-              </div>
-              <div>
-                <h3>Goals Scored Average - Total: </h3> <p>{teamData.goals.for.average.total}</p>
-              </div>
-              <div>
-                <h3>Goals Scored - Home: </h3> <p>{teamData.goals.for.total.home}</p>
-              </div>
-              <div>
-                <h3>Goals Scored - Away: </h3> <p>{teamData.goals.for.total.away}</p>
-              </div>
-              <div>
-                <h3>Penalties: </h3> <p>{teamData.penalty.total}</p>
-              </div>
-              <div>
-                <h3>Penalties Scored Percentage: </h3> <p>{teamData.penalty.scored.percentage}</p>
-              </div>
-              <div>
-                <h3>Penalties Scored Total: </h3> <p>{teamData.penalty.scored.total}</p>
-              </div>
-              <div>
-                <h3>Penalties missed Percentage: </h3> <p>{teamData.penalty.missed.percentage}</p>
-              </div>
-              <div>
-                <h3>Penalties missed Total: </h3> <p>{teamData.penalty.missed.total}</p>
-              </div>
+                <div>
+                  <h3>Most Goals Against - Home:</h3> <p>{teamData.biggest.goals.against.home}</p>
+                </div>
+                <div>
+                  <h3>Most Goals Against - Away:</h3> <p>{teamData.biggest.goals.against.away}</p>
+                </div>
+                <div>
+                  <h3>Most Goals For - Home: </h3> <p>{teamData.biggest.goals.for.home}</p>
+                </div>
+                <div>
+                  <h3>Most Goals For - Away: </h3> <p>{teamData.biggest.goals.for.away}</p>
+                </div>
+                <div>
+                  <h3>Biggest Victory - Home: </h3> <p>{teamData.biggest.wins.home}</p>
+                </div>
+                <div>
+                  <h3>Biggest Victory - Away: </h3> <p>{teamData.biggest.wins.away}</p>
+                </div>
+                <div>
+                  <h3>Biggest Loss - Home: </h3> <p>{teamData.biggest.loses.home}</p>
+                </div>
+                <div>
+                  <h3>Biggest Loss - Away: </h3> <p>{teamData.biggest.loses.away}</p>
+                </div>
+                <div>
+                  <h3>Clean Sheets - Home </h3> <p>{teamData.clean_sheet.home}</p>
+                </div>
+                <div>
+                  <h3>Clean Sheets - Away: </h3> <p>{teamData.clean_sheet.away}</p>
+                </div>
+                <div>
+                  <h3>Failed to Score - Home: </h3> <p>{teamData.failed_to_score.home}</p>
+                </div>
+                <div>
+                  <h3>Failed to Score - Away: </h3> <p>{teamData.failed_to_score.away}</p>
+                </div>
+                <div>
+                  <h3>Failed to Score - Total: </h3> <p>{teamData.failed_to_score.total}</p>
+                </div>
+                <div>
+                  <h3>Goals Conceded Average - Home: </h3> <p>{teamData.goals.against.average.home}</p>
+                </div>
+                <div>
+                  <h3>Goals Conceded Average - Away: </h3> <p>{teamData.goals.against.average.away}</p>
+                </div>
+                <div>
+                  <h3>Goals Conceded Average - Total: </h3> <p>{teamData.goals.against.average.total}</p>
+                </div>
+                <div>
+                  <h3>Goals Conceded - Home: </h3> <p>{teamData.goals.against.total.home}</p>
+                </div>
+                <div>
+                  <h3>Goals Conceded - Away: </h3> <p>{teamData.goals.against.total.away}</p>
+                </div>
+                <div>
+                  <h3>Goals Scored Average - Home: </h3> <p>{teamData.goals.for.average.home}</p>
+                </div>
+                <div>
+                  <h3>Goals Scored Average - Away: </h3> <p>{teamData.goals.for.average.away}</p>
+                </div>
+                <div>
+                  <h3>Goals Scored Average - Total: </h3> <p>{teamData.goals.for.average.total}</p>
+                </div>
+                <div>
+                  <h3>Goals Scored - Home: </h3> <p>{teamData.goals.for.total.home}</p>
+                </div>
+                <div>
+                  <h3>Goals Scored - Away: </h3> <p>{teamData.goals.for.total.away}</p>
+                </div>
+                <div>
+                  <h3>Penalties: </h3> <p>{teamData.penalty.total}</p>
+                </div>
+                <div>
+                  <h3>Penalties Scored Percentage: </h3> <p>{teamData.penalty.scored.percentage}</p>
+                </div>
+                <div>
+                  <h3>Penalties Scored Total: </h3> <p>{teamData.penalty.scored.total}</p>
+                </div>
+                <div>
+                  <h3>Penalties missed Percentage: </h3> <p>{teamData.penalty.missed.percentage}</p>
+                </div>
+                <div>
+                  <h3>Penalties missed Total: </h3> <p>{teamData.penalty.missed.total}</p>
+                </div>
               </Div1>
             </TeamStats>
           </ModalComponent>
@@ -435,6 +464,7 @@ export default function Home({ players, team, leagues }: IHome) {
         <div>
           <h1><a href="/" style={{ color: isDarkMode ? "white" : "black" }}>Football IQ 🧠</a></h1>
         </div>
+        
         <DropdownDiv isDarkMode={isDarkMode}>
           <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
         </DropdownDiv>
