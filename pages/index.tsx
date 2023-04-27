@@ -134,7 +134,6 @@ export default function Home({ players, team, leagues }: IHome) {
   const [inputValue, setInputValue] = useState('');
 
   const debouncedHandleInputChange = debounce((value: string, actionMeta: ValueType<OptionType>) => {
-      console.log('debouncedHandleInputChange called with value:', value);
     setInputValue(value);
   
     const filteredTeams = teamsList.map((team: TeamT) => {
