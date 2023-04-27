@@ -42,8 +42,12 @@ function ModalComponent({ isOpen, onRequestClose, children }: ModalProps) {
             style={customStyles}
             contentLabel="Modal"
         >
-            <button onClick={onRequestClose} style={{position: 'absolute', top: '10px', right: '10px', color: 'black', border: 'none', padding: '8px', borderRadius: '50%', fontSize: '2rem', cursor: 'pointer' }}>X</button>
+            <button onClick={onRequestClose} style={{ position: 'absolute', top: '10px', right: '10px', color: 'black', border: 'none', padding: '8px', borderRadius: '50%', fontSize: '2rem', cursor: 'pointer' }}>X</button>
             {children}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <h2>Save the Stats!</h2>
+                <button onClick={() => console.log("View stat clicked!")} style={{ backgroundColor: "blue", color: "white", border: "none", padding: "12px 24px", borderRadius: "4px", cursor: "pointer"}}>Save</button>
+            </div>
         </Modal>
     );
 };
