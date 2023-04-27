@@ -17,6 +17,8 @@ import { ModalComponent } from 'components/Modal'
 import { List, Bio } from 'styles/modal-stats-style'
 import ChartPage from 'components/ChartPage';
 import Select from 'react-select';
+import { teamsList } from 'data/teams';
+import type { TeamT, TeamsList } from 'data/teams';
 
 type team = {
   id: number;
@@ -101,7 +103,7 @@ type LeagueNames = {
   id: string;
 }
 
-const LeagueOptions: LeagueNames[] = [
+const LeagueOptionsData: LeagueNames[] = [
   { value: 'Premier League', label: 'Premier League', id: '39' },
   { value: 'La Liga', label: 'La Liga', id: '140' },
   { value: 'Bundesliga', label: 'Bundesliga', id: '78' },
@@ -115,16 +117,6 @@ const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
 `;
 
-// const SearchInput = styled(Select) <{ isDarkMode?: boolean }>`
-//   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
-//   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
-// `;
-
-// const Search = styled(Select) <{ isDarkMode?: boolean }>`
-//   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
-//   background-color: ${({ isDarkMode }) => (isDarkMode ? 'black' : 'white')};
-// `;
-
 export default function Home({ players, team, leagues }: IHome) {
   const { isDarkMode } = useGlobalContext();
   const [selectedLeague, setSelectedLeague] = useState<string>();
@@ -136,6 +128,21 @@ export default function Home({ players, team, leagues }: IHome) {
   const [playerData1, setPlayerData1] = useState<PlayerData[]>([]);
   const [isPlayStatModalOpen, setIsPlayStatModalOpen] = useState(false);
   const [isTeamStatModalOpen, setIsTeamStatModalOpen] = useState(false);
+  const [leagueOptions, setLeagueOptions] = useState<LeagueNames[]>(LeagueOptionsData)
+  const [inputValue, setInputValue] = useState('');
+
+
+  const handleInputChange = (value: string, actionMeta: ValueType<OptionType>) => {
+    setInputValue(value);
+
+    const filteredTeams = teamsList.map((team: TeamT) => {
+      if (team.name.toLowerCase().includes(value.toLowerCase())) {
+        return { value: team.name, label: team.name, id: team.id.toString() }
+      }
+    }).filter(item => item !== undefined);
+
+    setLeagueOptions(filteredTeams);
+  };
 
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -143,10 +150,14 @@ export default function Home({ players, team, leagues }: IHome) {
 
   const handleSelectChange = async (id: string) => {
     try {
-      const { data } = await teamsApi.getTeamsByLeagueId(id);
-      setTeams(data.response);
-      setSelectedLeague(id)
-      setSelectedTeam(undefined);
+      if (leagueOptions === LeagueOptionsData) {
+        const { data } = await teamsApi.getTeamsByLeagueId(id);
+        setTeams(data.response);
+        setSelectedLeague(id)
+        setSelectedTeam(undefined);
+      } else {
+        handleLogoClick(id);
+      }
     } catch (error) {
     }
   }
@@ -194,19 +205,7 @@ export default function Home({ players, team, leagues }: IHome) {
     }
   }
 
-  // const handleSearchChange = (inputValue: string) => {
-  //   // Filter the leagues based on user input
-  //   const filteredLeagues = LeagueOptions.filter((league) =>
-  //     league.label.toLowerCase().includes(inputValue.toLowerCase())
-  //   );
 
-  //   // Combine the filtered leagues, teams, and players
-  //   const filteredOptions = [    { label: 'Leagues', options: filteredLeagues }];
-  
-  //   // Update the options in the dropdown
-  //   Dropdown(filteredOptions);
-  // };
-  
 
   const customStyles = {
     control: (provided: any, state: { isDarkMode: any }) => ({
@@ -238,14 +237,8 @@ export default function Home({ players, team, leagues }: IHome) {
     })
   };
 
-  console.log(teamData)
-
   return (
     <Container isDarkMode={isDarkMode}>
-
-      {/* <SearchDiv isDarkMode={isDarkMode}>
-        <Search onChange={(value: PlayerData) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
-      </SearchDiv> */}
 
       <Hamburger />
       <PlayerStatsDiv>
@@ -464,9 +457,9 @@ export default function Home({ players, team, leagues }: IHome) {
         <div>
           <h1><a href="/" style={{ color: isDarkMode ? "white" : "black" }}>Football IQ 🧠</a></h1>
         </div>
-        
+
         <DropdownDiv isDarkMode={isDarkMode}>
-          <Dropdown options={LeagueOptions} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} />
+        <Dropdown options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} value={inputValue} />
         </DropdownDiv>
 
       </LogoDiv>

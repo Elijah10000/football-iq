@@ -31,34 +31,39 @@ const App = () => {
       });
   }, []);
 
-  const handleSelectChange = (selectedOption) => {
-    setSelectedLeague(selectedOption);
-    axios({
-      method: 'GET',
-      url: `https://api-football-v1.p.rapidapi.com/v3/teams/`,
-      headers: {
-        'x-rapidapi-key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
-        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
-      }
-    })
-    .then(response => {
-      const clubs = response.data.response.map((club) => ({
-        label: club.name,
-        value: club.team.id
-      }));
-      setClubs(clubs);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  // const handleSelectChange = (selectedOption) => {
+  //   setSelectedLeague(selectedOption);
+  //   axios({
+  //     method: 'GET',
+  //     url: `https://api-football-v1.p.rapidapi.com/v3/teams/`,
+  //     headers: {
+  //       'x-rapidapi-key': '3e93f54308mshcc56d624809a4a9p144a30jsn829d33d2f0e4',
+  //       'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+  //     }
+  //   })
+  //   .then(response => {
+  //     const clubs = response.data.response.map((club) => ({
+  //       label: club.name,
+  //       value: club.team.id
+  //     }));
+  //     setClubs(clubs);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+  // };
+
+  const handleSelectChange = (selectedOption: string) => {
+    console.log('Searchbar callback');
+    console.log(selectedOption);
   };
-  
+
   return (
     <div>
       <Select
         options={dropdown}
         value={selectedLeague}
-        onChange={handleSelectChange}
+        onChange={() => handleSelectChange}
       />
       {selectedLeague && (
         <div>
