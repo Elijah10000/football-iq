@@ -149,23 +149,21 @@ export default function Home({ players, team, leagues }: IHome) {
     debouncedHandleInputChange(value, actionMeta);
   };
 
-  const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  }
-
   const handleSelectChange = async (id: string) => {
     try {
       if (leagueOptions === LeagueOptionsData) {
         const { data } = await teamsApi.getTeamsByLeagueId(id);
         setTeams(data.response);
-        setSelectedLeague(id)
+        setSelectedLeague(id);
         setSelectedTeam(undefined);
       } else {
         handleLogoClick(id);
       }
+      setLeagueOptions(LeagueOptionsData);
     } catch (error) {
+      console.error(error);
     }
-  }
+  };  
 
   const handleLogoClick = async (id: string) => {
     try {
@@ -197,7 +195,6 @@ export default function Home({ players, team, leagues }: IHome) {
     }
   };
 
-
   const handleTeamLogoClick = async (teamId: string, leagueId: string) => {
     try {
       const { data } = await teamStatisticsApi.getTeamStatisticsById(teamId, leagueId);
@@ -209,8 +206,6 @@ export default function Home({ players, team, leagues }: IHome) {
       setIsTeamStatModalOpen(false)
     }
   }
-
-
 
   const customStyles = {
     control: (provided: any, state: { isDarkMode: any }) => ({
