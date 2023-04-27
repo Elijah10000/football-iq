@@ -38,7 +38,7 @@ interface DropdownDivProps {
 export const DropdownDiv = styled.div<DropdownDivProps>`
   background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
   margin-bottom: 3%;
-  width: 10%;
+  width: 11%;
 `;
 
 interface SearchDivProps {

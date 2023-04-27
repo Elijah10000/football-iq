@@ -19,6 +19,8 @@ import ChartPage from 'components/ChartPage';
 import Select from 'react-select';
 import { teamsList } from 'data/teams';
 import type { TeamT, TeamsList } from 'data/teams';
+import debounce from 'lodash/debounce';
+
 
 type team = {
   id: number;
@@ -131,17 +133,21 @@ export default function Home({ players, team, leagues }: IHome) {
   const [leagueOptions, setLeagueOptions] = useState<LeagueNames[]>(LeagueOptionsData)
   const [inputValue, setInputValue] = useState('');
 
-
-  const handleInputChange = (value: string, actionMeta: ValueType<OptionType>) => {
+  const debouncedHandleInputChange = debounce((value: string, actionMeta: ValueType<OptionType>) => {
+      console.log('debouncedHandleInputChange called with value:', value);
     setInputValue(value);
-
+  
     const filteredTeams = teamsList.map((team: TeamT) => {
       if (team.name.toLowerCase().includes(value.toLowerCase())) {
         return { value: team.name, label: team.name, id: team.id.toString() }
       }
     }).filter(item => item !== undefined);
-
+  
     setLeagueOptions(filteredTeams);
+  }, 500);
+  
+  const handleInputChange = (value: string, actionMeta: ValueType<OptionType>) => {
+    debouncedHandleInputChange(value, actionMeta);
   };
 
   const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -459,7 +465,7 @@ export default function Home({ players, team, leagues }: IHome) {
         </div>
 
         <DropdownDiv isDarkMode={isDarkMode}>
-        <Dropdown options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} value={inputValue} />
+          <Dropdown options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} value={inputValue} placeholder="Select or Search" />
         </DropdownDiv>
 
       </LogoDiv>
