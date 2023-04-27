@@ -31,7 +31,7 @@ export const Hamburger = (props: HamburgerProps) => {
           {isOpen && (
             <ul>
               <li><a href="/">Home</a></li>
-              <li><a href="login">Login</a></li>
+              <li><a href="/index.html">Login</a></li>
               <li><a href="/About">About Us</a></li>
               <li>Transfer News</li>
               <li><DarkMode onToggle={handleToggle} /></li>
