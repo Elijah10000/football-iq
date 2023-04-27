@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import Link from 'next/link';
 
 interface HamburgerProps {
   isDarkMode?: boolean;
@@ -13,7 +12,7 @@ interface HamburgerProps {
 export const Hamburger = (props: HamburgerProps) => {
   const { isDarkMode } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -31,8 +30,9 @@ export const Hamburger = (props: HamburgerProps) => {
         <SidePanel isOpen={isOpen}>
           {isOpen && (
             <ul>
+              <li><a href="/">Home</a></li>
               <li><a href="login">Login</a></li>
-              <li><a href="pages\AboutUs.tsx">About Us</a></li>
+              <li><a href="/About">About Us</a></li>
               <li>Transfer News</li>
               <li><DarkMode onToggle={handleToggle} /></li>
             </ul>
@@ -42,5 +42,5 @@ export const Hamburger = (props: HamburgerProps) => {
     </ThemeProvider>
   );
 };
-  
+
 export default Hamburger;

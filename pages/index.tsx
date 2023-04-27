@@ -6,7 +6,7 @@ import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
 import { teamStatisticsApi } from 'api/teamStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1, SearchDiv } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1 } from 'styles/index'
 import { useState, useEffect } from 'react'
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
