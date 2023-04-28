@@ -135,16 +135,16 @@ export default function Home({ players, team, leagues }: IHome) {
 
   const debouncedHandleInputChange = debounce((value: string, actionMeta: ValueType<OptionType>) => {
     setInputValue(value);
-  
+
     const filteredTeams = teamsList.map((team: TeamT) => {
       if (team.name.toLowerCase().includes(value.toLowerCase())) {
-        return { value: team.name, label: team.name, id: team.id.toString() }
+        return { value: team.name, label: team.name, id: team.id.toString(), leagueId: team.leagueId };
       }
     }).filter(item => item !== undefined);
-  
-    setLeagueOptions(filteredTeams);
+
+    setLeagueOptions(value === '' ? LeagueOptionsData : filteredTeams);
   }, 500);
-  
+
   const handleInputChange = (value: string, actionMeta: ValueType<OptionType>) => {
     debouncedHandleInputChange(value, actionMeta);
   };
@@ -159,11 +159,12 @@ export default function Home({ players, team, leagues }: IHome) {
       } else {
         handleLogoClick(id);
       }
+      const selectedTeam = teamsList.find(team => team.id.toString() === id);
+      setSelectedLeague(selectedTeam?.leagueId.toString());
       setLeagueOptions(LeagueOptionsData);
     } catch (error) {
-      console.error(error);
     }
-  };  
+  };
 
   const handleLogoClick = async (id: string) => {
     try {
@@ -197,7 +198,9 @@ export default function Home({ players, team, leagues }: IHome) {
 
   const handleTeamLogoClick = async (teamId: string, leagueId: string) => {
     try {
+      console.log(teamId, leagueId)
       const { data } = await teamStatisticsApi.getTeamStatisticsById(teamId, leagueId);
+      console.log(data);
       setTeamData(data.response);
 
       setIsTeamStatModalOpen(true);
@@ -465,10 +468,13 @@ export default function Home({ players, team, leagues }: IHome) {
       </LogoDiv>
 
       <TeamCrest>
-        {selectedTeam && selectedLeague && (
+        {selectedTeam && (
           <>
-            <img src={selectedTeam.logo} alt={selectedTeam.name} onClick={() => handleTeamLogoClick(selectedTeam.id.toString(), selectedLeague)} />
-            <TeamName isDarkMode={isDarkMode}>{selectedTeam.name}</TeamName>
+            {selectedTeam.logo ? (
+              <img src={selectedTeam.logo} alt={selectedTeam.name} onClick={() => handleTeamLogoClick(selectedTeam.id.toString(), selectedLeague)} />
+            ) : (
+              <span>{selectedTeam.name}</span>
+            )}
           </>
         )}
       </TeamCrest>
