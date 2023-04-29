@@ -157,11 +157,11 @@ export default function Home({ players, team, leagues }: IHome) {
         setSelectedLeague(id);
         setSelectedTeam(undefined);
       } else {
+        const selectedTeam = teamsList.find(team => team.id.toString() === id);
+        setSelectedLeague(selectedTeam?.leagueId.toString());
+        setLeagueOptions(LeagueOptionsData);
         handleLogoClick(id);
       }
-      const selectedTeam = teamsList.find(team => team.id.toString() === id);
-      setSelectedLeague(selectedTeam?.leagueId.toString());
-      setLeagueOptions(LeagueOptionsData);
     } catch (error) {
     }
   };
@@ -470,10 +470,11 @@ export default function Home({ players, team, leagues }: IHome) {
       <TeamCrest>
         {selectedTeam && (
           <>
-            {selectedTeam.logo ? (
-              <img src={selectedTeam.logo} alt={selectedTeam.name} onClick={() => handleTeamLogoClick(selectedTeam.id.toString(), selectedLeague)} />
-            ) : (
-              <span>{selectedTeam.name}</span>
+            {selectedTeam.logo && (
+              <>
+                <img src={selectedTeam.logo} alt={selectedTeam.name} onClick={() => handleTeamLogoClick(selectedTeam.id.toString(), selectedLeague)} />
+                <p>{selectedTeam.name}</p>
+              </>
             )}
           </>
         )}

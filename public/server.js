@@ -68,13 +68,13 @@ app.use(session({
 }));
 
 // Handling GET request to the /success endpoint
-app.get('/success', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'success.html'));
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'index.tsx'));
 });
 
 // Handling GET request to the /login endpoint
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Handling POST request to the /login endpoint
@@ -161,13 +161,12 @@ app.post('/signup', async (req, res) => {
 
     try {
         await pool.query(insertQuery);
-        res.redirect('/success');
+        res.redirect('/index');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal server error');
     }
 });
-
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}.`);

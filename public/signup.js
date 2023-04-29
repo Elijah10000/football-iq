@@ -3,7 +3,7 @@ console.log("signup.js file loaded.");
 // import { query } from './db.js';
 
 function redirectToSuccess() {
-  window.location.href = "/index";
+  window.location.href = "/";
 }
 
 const form = document.querySelector('#signup-form');
@@ -15,7 +15,7 @@ form.addEventListener('submit', async (event) => {
   const password = form.elements.password.value;
 
   try {
-    const response = await fetch('/signup', {
+    const response = await fetch('/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -30,9 +30,11 @@ form.addEventListener('submit', async (event) => {
       const successMessage = document.createElement('p');
       successMessage.textContent = 'Signup successful!';
       form.insertAdjacentElement('beforeend', successMessage);
+      // Redirect to success page
+      window.location.href = "/";
     } else {
       console.error(data); // Display error message to console
-    }
+    }    
   } catch (error) {
     console.error(error);
   }
