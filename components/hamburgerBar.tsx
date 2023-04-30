@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { signIn } from 'next-auth/react';
 
 interface HamburgerProps {
   isDarkMode?: boolean;
@@ -31,7 +32,14 @@ export const Hamburger = (props: HamburgerProps) => {
           {isOpen && (
             <ul>
               <li><a href="/">Home</a></li>
-              <li><a href="/index.html">Login</a></li>
+              <button
+                onClick={() => {
+                  signIn();
+                }}
+              >
+                Login
+              </button>
+              {/* <li><a href="/auth/signin">Login</a></li> */}
               <li><a href="/About">About Us</a></li>
               <li>Transfer News</li>
               <li><DarkMode onToggle={handleToggle} /></li>
