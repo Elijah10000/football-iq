@@ -32,13 +32,14 @@ export const Hamburger = (props: HamburgerProps) => {
           {isOpen && (
             <ul>
               <li><a href="/">Home</a></li>
-              <button
+             <li> <button
                 onClick={() => {
                   signIn();
                 }}
               >
                 Login
               </button>
+              </li>
               {/* <li><a href="/auth/signin">Login</a></li> */}
               <li><a href="/About">About Us</a></li>
               <li>Transfer News</li>
