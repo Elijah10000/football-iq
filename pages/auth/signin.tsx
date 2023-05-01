@@ -3,7 +3,7 @@ import { FormEventHandler, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import styles from 'styles/signin.module.css';
 
-interface SignInProps {}
+interface SignInProps { }
 
 const SignIn: NextPage = (props: SignInProps): JSX.Element => {
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
@@ -42,6 +42,9 @@ const SignIn: NextPage = (props: SignInProps): JSX.Element => {
           />
 
           <input type="submit" value="login" />
+          {/* <button href="/auth/signup"> <a>Don't have an account? Sign up here!</a> </button> */}
+          <a href="/auth/signup">Don't have an account? Sign up here!</a>
+
         </form>
       </div>
     </div>
