@@ -1,129 +1,22 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import NextAuth from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
 
-interface UserModelAttributes {
-  id: number;
-  email: string;
-  password: string;
-  name: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import getConfig from 'next/config'
 
-class User extends Model<UserModelAttributes> implements UserModelAttributes {
-  public createdAt!: Date;
-  public updatedAt!: Date;
-  public id!: number;
-  public email!: string;
-  public password!: string;
-  public name!: string;
-  public role!: string;
-}
+const { publicRuntimeConfig: { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } } = getConfig()
 
-const sequelize = new Sequelize({
-  dialect: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'password1',
-  database: 'postgres',
-});
-
-User.init(
-  {
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal('NOW()'),
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal('NOW()'),
-    },    
-  },
-  {
-    sequelize,
-    tableName: 'users',
-  },
-);
-
-
-const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-  },
+export default NextAuth({
   providers: [
-    CredentialsProvider({
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
-        
-        // Look up user from database
-        const user = await User.findOne({ where: { email } });
-        if (!user) {
-          throw new Error("invalid credentials");
+    GoogleProvider({
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "select_account",
         }
+      }
 
-        // Verify password
-        const validPassword = await user.comparePassword(password);
-        if (!validPassword) {
-          throw new Error("invalid credentials");
-        }
-
-        // if everything is fine
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        };
-      },
     }),
   ],
-  pages: {
-    signIn: "/auth/signin",
-  },
-  callbacks: {
-    jwt(params) {
-      // update token
-      if (params.user?.role) {
-        params.token.role = params.user.role;
-      }
-      // return final_token
-      return params.token;
-    },
-  },
-};
-
-export default NextAuth(authOptions);
+  secret: process.env.JWT_SECRET
+});

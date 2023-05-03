@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/dropdown.tsx", "public/server.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/dropdown.tsx", "public/server.js", "pages/login.jsx"],
   "exclude": ["node_modules"]
 }
 

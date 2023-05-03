@@ -47,16 +47,12 @@ export const SidePanel = styled.div<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
   left: 0;
-  width: 10%;
-  max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')};
   overflow: hidden;
   transition: max-height 0.2s ease-in-out;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
   ul {
-    list-style: none;
     padding: 0;
-    margin: 0;
   }
 
   li {
@@ -67,4 +63,37 @@ export const SidePanel = styled.div<{ isOpen: boolean }>`
       opacity: 0.8;
     }
   }
+`;
+
+export const StyledButton = styled.button<{ isDarkMode?: boolean }>`
+  /* background-color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'}; */
+  /* color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'}; */
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const StyledGreeting = styled.button<{ isDarkMode?: boolean }>`
+  /* background-color: ${({ isDarkMode }) => isDarkMode ? 'red' : 'red'}; */
+  /* color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'}; */
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 16px;
+  font-style: italic; 
+  margin-bottom: 2%;
+`;
+
+export const DarkModeDiv = styled.div`
+ padding: 5px;
+ font-size: 16px;
+ font-weight: bold;
+ margin-left: 2%;
 `;
