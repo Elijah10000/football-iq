@@ -1,4 +1,4 @@
-import { HamburgerDiv, HamburgerButton, SidePanel, StyledButton, StyledGreeting, DarkModeDiv } from 'styles/hamburgerBar-style'
+import { HamburgerDiv, HamburgerButton, SidePanel, StyledButton, StyledGreeting, DarkModeDiv, GreetingText, GreetingImage } from 'styles/hamburgerBar-style'
 import DarkMode from './DarkMode';
 import { useState } from 'react';
 import { useGlobalContext } from 'contexts/GlobalContext';
@@ -39,13 +39,13 @@ export const Hamburger = (props: HamburgerProps) => {
         </HamburgerButton>
         <SidePanel isOpen={isOpen}>
           {isOpen && (
-            <ul>
-              {session ? <StyledGreeting>Hi, {session.user?.name}!</StyledGreeting> : null}
-              <li><StyledButton a href="/">Home</StyledButton></li>
+            <ul> {session ? (<StyledGreeting> <GreetingText>Hi, {session.user?.name.split(' ')[0]}!</GreetingText>{session.user?.image && <GreetingImage src={session.user.image} alt={session.user.name} />} </StyledGreeting>
+            ) : null}
+              <li><StyledButton><a href="/">Home</a></StyledButton></li>
               <li>
                 <StyledButton onClick={handleLogin}> {session ? 'Sign out' : 'Login'}</StyledButton>
               </li>
-              <li><StyledButton a href="/About">About Us</StyledButton></li>
+              <li><StyledButton><a href="/About">About Us</a></StyledButton></li>
               <li><StyledButton>Transfer News</StyledButton></li>
               <li><DarkModeDiv><DarkMode onToggle={handleToggle} /></DarkModeDiv></li>
             </ul>

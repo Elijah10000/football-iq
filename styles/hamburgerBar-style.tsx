@@ -56,8 +56,9 @@ export const SidePanel = styled.div<{ isOpen: boolean }>`
   }
 
   li {
-    padding-top: 10px;
+    padding-top: 20px;
     cursor: pointer;
+    border-bottom: 1px solid #b1b0b0;
 
     &:hover {
       opacity: 0.8;
@@ -65,9 +66,7 @@ export const SidePanel = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-export const StyledButton = styled.button<{ isDarkMode?: boolean }>`
-  /* background-color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'}; */
-  /* color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'}; */
+export const StyledButton = styled.div`
   border: none;
   border-radius: 4px;
   padding: 5px;
@@ -80,15 +79,19 @@ export const StyledButton = styled.button<{ isDarkMode?: boolean }>`
   }
 `;
 
-export const StyledGreeting = styled.button<{ isDarkMode?: boolean }>`
-  /* background-color: ${({ isDarkMode }) => isDarkMode ? 'red' : 'red'}; */
-  /* color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'}; */
-  border: none;
-  border-radius: 4px;
-  padding: 5px;
-  font-size: 16px;
-  font-style: italic; 
-  margin-bottom: 2%;
+export const StyledGreeting = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const GreetingText = styled.p`
+  margin-right: 10px;
+`;
+
+export const GreetingImage = styled.img`
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 `;
 
 export const DarkModeDiv = styled.div`

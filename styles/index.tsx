@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'; 
 
 export const Container = styled.div<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'background-color: black;'};
