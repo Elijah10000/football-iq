@@ -6,7 +6,7 @@ import { leaguesApi } from 'api/leagues'
 import { teamsApi } from 'api/teams'
 import { playersStatisticsApi } from 'api/playersStatistics'
 import { teamStatisticsApi } from 'api/teamStatistics'
-import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1 } from 'styles/index'
+import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1, LoadingMessage } from 'styles/index'
 import { useState, useEffect } from 'react'
 import { useGlobalContext } from 'contexts/GlobalContext';
 import type { Team } from 'api/teams';
@@ -121,7 +121,7 @@ const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
 `;
 
 export default function Home({ players, team, leagues }: IHome) {
-  const { isDarkMode } = useGlobalContext();
+  const { isDarkMode, setIsDarkMode } = useGlobalContext();
   const [selectedLeague, setSelectedLeague] = useState<string>();
   const [selectedTeam, setSelectedTeam] = useState<team | undefined>(team);
   const [selectedPlayers, setSelectedPlayers] = useState<player[]>([])
@@ -135,8 +135,19 @@ export default function Home({ players, team, leagues }: IHome) {
   const [inputValue, setInputValue] = useState('');
   const { data: session, status } = useSession();
 
+
+  useEffect(() => {
+    const darkModeOn = localStorage.getItem("isDarkMode");
+    if (darkModeOn === "true") {
+      setIsDarkMode(true)
+    } else {
+      setIsDarkMode(false)
+
+    }
+  })
+
   if (status === 'loading') {
-    return <p>Loading...</p>;
+    return <LoadingMessage>Loading...</LoadingMessage>;
   }
 
   if (!session) {
@@ -251,12 +262,12 @@ export default function Home({ players, team, leagues }: IHome) {
     })
   };
 
+
   return (
     <div>
       <Container isDarkMode={isDarkMode}>
         <Hamburger />
         <PlayerStatsDiv>
-
           {isPlayStatModalOpen && (
 
             <ModalComponent isOpen={isPlayStatModalOpen} onRequestClose={() => setIsPlayStatModalOpen(false)}>
@@ -519,6 +530,7 @@ export default function Home({ players, team, leagues }: IHome) {
 
   )
 }
+
 export async function getServerSideProps(context: any) {
   const { data } = await playersApi.getPlayersBySquadId("49");
   const leagues = await leaguesApi.getLeagues();

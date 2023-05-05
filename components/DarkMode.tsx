@@ -15,7 +15,10 @@ const DarkMode = ({ onToggle }: DarkModeProps) => {
   const { isDarkMode, setIsDarkMode } = useGlobalContext();
 
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    
     setIsDarkMode(event.target.checked);
+    localStorage.setItem("isDarkMode", event.target.checked ? "true" : "false");
     onToggle();
 };
 
