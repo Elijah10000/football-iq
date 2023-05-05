@@ -270,7 +270,7 @@ export default function Home({ players, team, leagues }: IHome) {
         <PlayerStatsDiv>
           {isPlayStatModalOpen && (
 
-            <ModalComponent isOpen={isPlayStatModalOpen} onRequestClose={() => setIsPlayStatModalOpen(false)}>
+            <ModalComponent isDarkMode={isDarkMode} isOpen={isPlayStatModalOpen} onRequestClose={() => setIsPlayStatModalOpen(false)}>
 
               {playerData.map((player, index) => (
                 <Bio key={index}>
@@ -341,7 +341,7 @@ export default function Home({ players, team, leagues }: IHome) {
           )}
 
           {isTeamStatModalOpen && (
-            <ModalComponent isOpen={isTeamStatModalOpen} onRequestClose={() => setIsTeamStatModalOpen(false)}>
+            <ModalComponent isDarkMode={isDarkMode} isOpen={isTeamStatModalOpen} onRequestClose={() => setIsTeamStatModalOpen(false)}>
               <TeamStats>
                 <img src={selectedTeam.logo} alt={selectedTeam.name} />
                 <div>
@@ -484,7 +484,7 @@ export default function Home({ players, team, leagues }: IHome) {
           </div>
 
           <DropdownDiv isDarkMode={isDarkMode}>
-            <Dropdown options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} isDarkMode={isDarkMode} styles={customStyles} value={inputValue} placeholder="Select or Search" />
+            <Dropdown isDarkMode={isDarkMode} options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Select or Search" />
           </DropdownDiv>
 
         </LogoDiv>
