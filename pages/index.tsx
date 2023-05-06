@@ -262,7 +262,6 @@ export default function Home({ players, team, leagues }: IHome) {
     })
   };
 
-
   return (
     <div>
       <Container isDarkMode={isDarkMode}>

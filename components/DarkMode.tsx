@@ -27,7 +27,7 @@ const DarkMode = ({ onToggle }: DarkModeProps) => {
       <GlobalStyles isDarkMode={isDarkMode} />
       <ToggleContainer>
       <ToggleLabel htmlFor="darkModeToggle" id="toggleLabel" isDarkMode={isDarkMode}>
-          {isDarkMode ? 'Light 🌞' : 'Dark 🌑'}
+          {isDarkMode ? '🌓' : ' 🌓'}
         </ToggleLabel>
         <ToggleSwitch
           type="checkbox"

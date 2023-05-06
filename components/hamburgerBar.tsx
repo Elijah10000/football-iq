@@ -46,7 +46,7 @@ export const Hamburger = (props: HamburgerProps) => {
                 <StyledButton onClick={handleLogin}> {session ? 'Sign out' : 'Login'}</StyledButton>
               </li>
               <li><StyledButton><a href="/About">About Us</a></StyledButton></li>
-              <li><StyledButton>Transfer News</StyledButton></li>
+              <li><StyledButton><a href="/topPlayers">Top Players</a></StyledButton></li>
               <li><DarkModeDiv><DarkMode onToggle={handleToggle} /></DarkModeDiv></li>
             </ul>
           )}
