@@ -22,6 +22,7 @@ import type { TeamT, TeamsList } from 'data/teams';
 import debounce from 'lodash/debounce';
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import ComparisionFeature from 'components/ComparisionFeature';
 
 type team = {
   id: number;
@@ -54,7 +55,7 @@ type league = {
   }
 }
 
-type PlayerData = {
+export type PlayerData = {
   player: {
     nationality: ReactNode
     height: ReactNode
@@ -232,7 +233,7 @@ export default function Home({ players, team, leagues }: IHome) {
     }
   }
 
-  const customStyles = {
+   const customStyles = {
     control: (provided: any, state: { isDarkMode: any }) => ({
       ...provided,
       color: state.isDarkMode ? 'white' : 'black',
@@ -261,6 +262,8 @@ export default function Home({ players, team, leagues }: IHome) {
       }
     })
   };
+
+  console.log(selectedTeam, isPlayStatModalOpen, selectedPlayers, teams)
 
   return (
     <div>
@@ -487,6 +490,10 @@ export default function Home({ players, team, leagues }: IHome) {
           </DropdownDiv>
 
         </LogoDiv>
+
+        {!selectedTeam && !isPlayStatModalOpen && selectedPlayers.length < 1 && !teams && (
+          <ComparisionFeature />
+        )}
 
         <TeamCrest>
           {selectedTeam && (
