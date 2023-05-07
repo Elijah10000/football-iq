@@ -1,23 +1,13 @@
 import { useState, useEffect } from 'react'
 import Select from 'react-select';
 import styled from "styled-components";
-import { PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1, LoadingMessage } from 'styles/index'
+import { DropdownDiv } from 'styles/index'
 import { players } from 'data/players';
 import type { Players } from 'data/players';
 import { useGlobalContext } from 'contexts/GlobalContext';
 import { playersStatisticsApi } from 'api/playersStatistics';
 import { PlayerData } from 'pages/index';
-
-const Container = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-    margin: 0 auto;
-    justify-content: center;
-    color: black;
-`;
-const Player1 = styled.div``;
-const Player2 = styled.div``;
+import { Container, Player1, Player2, PlayerWrapper, ComparisonWord, VersusDiv } from 'styles/comparisionFeature-styles';
 
 const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
@@ -25,9 +15,8 @@ const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
 `;
 
 const SDropdownDiv = styled(DropdownDiv)`
-    width: 100%;
+    width: 70%;
 `;
-
 
 const ComparisonFeature = () => {
     const { isDarkMode, setIsDarkMode } = useGlobalContext();
@@ -45,9 +34,6 @@ const ComparisonFeature = () => {
             setPlayerTwoToCompare(data.response[0])
 
         }
-        // Set Data
-
-        // 
     }
 
     const handlePlayer1Search = () => {
@@ -98,35 +84,41 @@ const ComparisonFeature = () => {
         })
     };
 
-
-    console.log(players)
-
     return (
         <Container>
-            <Player1>
-                <h2>Select Player 1</h2>
-                <SDropdownDiv isDarkMode={isDarkMode}>
-                    <Dropdown options={players} onInputChange={handlePlayer1Search} onChange={(value: Players) => handlePlayer1SelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Select or Search" />
-                </SDropdownDiv>
+            <ComparisonWord>
+                <h3>Compare</h3>
+            </ComparisonWord>
+            <PlayerWrapper>
+                <Player1>
+                    <h2>Select 1st field</h2>
+                    <SDropdownDiv isDarkMode={isDarkMode}>
+                        <Dropdown options={players} onInputChange={handlePlayer1Search} onChange={(value: Players) => handlePlayer1SelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Search" />
+                    </SDropdownDiv>
 
-                {playerOneToCompare && (
-                    <>
-                        {playerOneToCompare.player.name}
-                    </>
-                )}
-            </Player1>
-            <Player2>
-                <h2>Select Player 2</h2>
-                <SDropdownDiv isDarkMode={isDarkMode}>
-                    <Dropdown options={players} onInputChange={handlePlayer2Search} onChange={(value: Players) => handlePlayer2SelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Select or Search" />
-                </SDropdownDiv>
+                    {playerOneToCompare && (
+                        <>
+                            {playerOneToCompare.player.name}
+                            
+                        </>
+                    )}
+                </Player1>
+                <VersusDiv>
+                    <h3>Vs.</h3>
+                </VersusDiv>
+                <Player2>
+                    <h2>Select 2nd field</h2>
+                    <SDropdownDiv isDarkMode={isDarkMode}>
+                        <Dropdown options={players} onInputChange={handlePlayer2Search} onChange={(value: Players) => handlePlayer2SelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Search" />
+                    </SDropdownDiv>
 
-                {playerTwoToCompare && (
-                    <>
-                        {playerTwoToCompare.player.name}
-                    </>
-                )}
-            </Player2>
+                    {playerTwoToCompare && (
+                        <>
+                            {playerTwoToCompare.player.name}
+                        </>
+                    )}
+                </Player2>
+            </PlayerWrapper>
         </Container>
     )
 };

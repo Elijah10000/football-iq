@@ -1,8 +1,35 @@
-import { Player } from "styles";
-
 export type Players = {
     name: string;
     id: number;
+    age: number;
+    photo: string;
+  };
+  
+  export type PlayerStatistics = {
+    team: {
+      id: number;
+      name: string;
+    };
+    league: {
+      id: number;
+      name: string;
+    };
+    games: {
+      appearences: number;
+      lineups: number;
+      minutes: number;
+      number: number;
+    };
+    goals: {
+      total: number;
+      conceded: number;
+      assists: number;
+      saves: number;
+    };
+    cards: {
+      yellow: number;
+      red: number;
+    };
 };
 
 const players: Player[] = [
