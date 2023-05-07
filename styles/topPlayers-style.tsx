@@ -55,7 +55,7 @@ export const PlayerInfo = styled.div`
 
 export const PlayerName = styled.p<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'color: white;'};
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
 `;
@@ -63,21 +63,26 @@ export const PlayerName = styled.p<{ isDarkMode?: boolean }>`
 export const PlayerTeam = styled.p<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'color: white;'};
   margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 export const PlayerAppearances = styled.p<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'color: white;'};
   margin-bottom: 5px;
+  font-size: 15px;
 `;
 
 export const PlayerGoals = styled.p<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'color: white;'};
   margin-bottom: 5px;
+  font-size: 15px;
 `;
 
 export const PlayerAssists = styled.p<{ isDarkMode?: boolean }>`
   ${({ isDarkMode }) => isDarkMode && 'color: white;'};
   margin-bottom: 5px;
+  font-size: 15px;
 `;
 
 export const TopPlayersTitle = styled.h1<{ isDarkMode?: boolean }>`
