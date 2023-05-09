@@ -486,7 +486,7 @@ export default function Home({ players, team, leagues }: IHome) {
           </div>
 
           <DropdownDiv isDarkMode={isDarkMode}>
-            <Dropdown isDarkMode={isDarkMode} options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Select or Search" />
+            <Dropdown isDarkMode={isDarkMode} options={leagueOptions} onInputChange={handleInputChange} onChange={(value: LeagueNames) => handleSelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Search for team" />
           </DropdownDiv>
 
         </LogoDiv>

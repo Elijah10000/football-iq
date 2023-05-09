@@ -20,50 +20,49 @@ const SDropdownDiv = styled(DropdownDiv)`
 
 const ComparisonFeature = () => {
     const { isDarkMode, setIsDarkMode } = useGlobalContext();
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue1, setInputValue1] = useState('');
+    const [inputValue2, setInputValue2] = useState('');
     const [playerOneToCompare, setPlayerOneToCompare] = useState<PlayerData | undefined>();
     const [playerTwoToCompare, setPlayerTwoToCompare] = useState<PlayerData | undefined>();
-  
+
     useEffect(() => {
-      const fetchDefaultPlayers = async () => {
-        const [playerOne, playerTwo] = await Promise.all([
-          playersStatisticsApi.getStatisticsByPlayerId('19545'),
-          playersStatisticsApi.getStatisticsByPlayerId('47380'),
-        ]);
-        setPlayerOneToCompare(playerOne.data.response[0]);
-        setPlayerTwoToCompare(playerTwo.data.response[0]);
-      };
-      fetchDefaultPlayers();
+        const fetchDefaultPlayers = async () => {
+            const [playerOne, playerTwo] = await Promise.all([
+                playersStatisticsApi.getStatisticsByPlayerId('19545'),
+                playersStatisticsApi.getStatisticsByPlayerId('283'),
+            ]);
+            setPlayerOneToCompare(playerOne.data.response[0]);
+            setPlayerTwoToCompare(playerTwo.data.response[0]);
+        };
+        fetchDefaultPlayers();
     }, []);
-  
+
     const handlePlayerData = async (id: string, playerNumber: string) => {
-      const { data } = await playersStatisticsApi.getStatisticsByPlayerId(id);
-      console.log(data);
-  
-      if (playerNumber === '1') {
-        setPlayerOneToCompare(data.response[0])
-      } else {
-        setPlayerTwoToCompare(data.response[0])
-  
-      }
+        const { data } = await playersStatisticsApi.getStatisticsByPlayerId(id);
+        console.log(data);
+
+        if (playerNumber === '1') {
+            setPlayerOneToCompare(data.response[0])
+        } else {
+            setPlayerTwoToCompare(data.response[0])
+
+        }
     }
-  
-    const handlePlayer1Search = () => {
-      console.log("Player 1 Search");
+
+    const handlePlayer1Search = (value) => {
+        setInputValue1(value);
     };
-    const handlePlayer2Search = () => {
-      console.log("Player 2 Search");
+
+    const handlePlayer2Search = (value) => {
+        setInputValue2(value);
     };
-  
+
     const handlePlayer1SelectChange = (id: string) => {
-      handlePlayerData(id, '1')
-      console.log("Player 1 Change");
+        handlePlayerData(id, '1')
     };
-  
+
     const handlePlayer2SelectChange = (id: string) => {
-      handlePlayerData(id, '2')
-  
-      console.log("Player 2 Change");
+        handlePlayerData(id, '2')
     };
 
     const customStyles = {
@@ -97,25 +96,34 @@ const ComparisonFeature = () => {
     };
 
     return (
-        <Container>
-            <ComparisonWord>
+        <Container isDarkMode={isDarkMode}>
+            <ComparisonWord isDarkMode={isDarkMode}>
                 <h3>Compare</h3>
             </ComparisonWord>
-            <PlayerWrapper>
-                <Player1>
-                    <h2>Select 1st field</h2>
+            <PlayerWrapper isDarkMode={isDarkMode}>
+                <Player1 isDarkMode={isDarkMode}>
+                    <h2>Select 1st field </h2>
                     <SDropdownDiv isDarkMode={isDarkMode}>
-                        <Dropdown options={players} onInputChange={handlePlayer1Search} onChange={(value: Players) => handlePlayer1SelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Search" />
+                        <Dropdown isDarkMode={isDarkMode}
+                            options={players}
+                            onInputChange={(value: string) => handlePlayer1Search(value)}
+                            onChange={(value: Players) => handlePlayer1SelectChange(value.id)}
+                            styles={customStyles}
+                            value={inputValue1}
+                            placeholder="Search"
+                            menuIsOpen={inputValue1.length > 1}
+                        />
                     </SDropdownDiv>
 
                     {playerOneToCompare && (
+
                         <div>
                             <BioGrid>
                                 <img src={playerOneToCompare.player.photo} alt={playerOneToCompare.player.name} />
                             </BioGrid>
 
-                            <StatsGrid>
-                                <StatItem>
+                            <StatsGrid isDarkMode={isDarkMode}>
+                                <StatItem isDarkMode={isDarkMode}>
                                     <StatTitle>Name: </StatTitle>
                                     {playerOneToCompare.player.name}
                                 </StatItem>
@@ -168,73 +176,83 @@ const ComparisonFeature = () => {
                         </div>
                     )}
                 </Player1>
-                <VersusDiv>
+
+                <VersusDiv isDarkMode={isDarkMode}> 
                     <h3>Vs.</h3>
                 </VersusDiv>
-                <Player2>
+
+                <Player2 isDarkMode={isDarkMode}>
                     <h2>Select 2nd field</h2>
                     <SDropdownDiv isDarkMode={isDarkMode}>
-                        <Dropdown options={players} onInputChange={handlePlayer2Search} onChange={(value: Players) => handlePlayer2SelectChange(value.id)} styles={customStyles} value={inputValue} placeholder="Search" />
+                        <Dropdown isDarkMode={isDarkMode}
+                            options={players}
+                            onInputChange={(value: string) => handlePlayer2Search(value)}
+                            onChange={(value: Players) => handlePlayer2SelectChange(value.id)}
+                            styles={customStyles}
+                            value={inputValue2}
+                            placeholder="Search"
+                            menuIsOpen={inputValue2.length > 1}
+                        />
                     </SDropdownDiv>
 
                     {playerTwoToCompare && (
-                         <div>
-                         <BioGrid>
-                             <img src={playerTwoToCompare.player.photo} alt={playerTwoToCompare.player.name} />
-                         </BioGrid>
+                        <div>
+                            <BioGrid>
+                                <img src={playerTwoToCompare.player.photo} alt={playerTwoToCompare.player.name} />
+                            </BioGrid>
 
-                         <StatsGrid>
-                             <StatItem>
-                                 <StatTitle>Name: </StatTitle>
-                                 {playerTwoToCompare.player.name}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Age: </StatTitle>
-                                 {playerTwoToCompare.player.age}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Team: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].team.name}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>League: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].league.name}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Appearances: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].games.appearences}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Minutes: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].games.minutes}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Goals: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].goals.total}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Assists: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].goals.assists}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Conceded: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].goals.conceded}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Saves: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].goals.saves}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Yellow Cards: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].cards.yellow}
-                             </StatItem>
-                             <StatItem>
-                                 <StatTitle>Red Cards: </StatTitle>
-                                 {playerTwoToCompare.statistics[0].cards.red}
-                             </StatItem>
-                         </StatsGrid>
+                            <StatsGrid isDarkMode={isDarkMode}>
+                                <StatItem isDarkMode={isDarkMode}>
+                                    <StatTitle>Name: </StatTitle>
+                                    {playerTwoToCompare.player.name}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Age: </StatTitle>
+                                    {playerTwoToCompare.player.age}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Team: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].team.name}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>League: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].league.name}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Appearances: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].games.appearences}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Minutes: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].games.minutes}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Goals: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].goals.total}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Assists: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].goals.assists}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Conceded: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].goals.conceded}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Saves: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].goals.saves}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Yellow Cards: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].cards.yellow}
+                                </StatItem>
+                                <StatItem>
+                                    <StatTitle>Red Cards: </StatTitle>
+                                    {playerTwoToCompare.statistics[0].cards.red}
+                                </StatItem>
+                            </StatsGrid>
 
-                     </div>
+                        </div>
                     )}
                 </Player2>
             </PlayerWrapper>

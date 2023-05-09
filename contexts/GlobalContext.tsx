@@ -6,6 +6,7 @@ interface GlobalProviderProps {
 
 interface IGlobalContext {
     isDarkMode: boolean;
+    
     setIsDarkMode: (t: boolean) => void;
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
