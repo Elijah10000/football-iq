@@ -18,10 +18,9 @@ import { List, Bio } from 'styles/modal-stats-style'
 import ChartPage from 'components/ChartPage';
 import Select from 'react-select';
 import { teamsList } from 'data/teams';
-import type { TeamT, TeamsList } from 'data/teams';
+import type { TeamT } from 'data/teams';
 import debounce from 'lodash/debounce';
 import { useSession, signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import ComparisionFeature from 'components/ComparisionFeature';
 
 type team = {
