@@ -37,8 +37,8 @@ const ComparisonFeature = () => {
     useEffect(() => {
         const fetchDefaultPlayers = async () => {
             const [playerOne, playerTwo] = await Promise.all([
-                playersStatisticsApi.getStatisticsByPlayerId('283'),
                 playersStatisticsApi.getStatisticsByPlayerId('19545'),
+                playersStatisticsApi.getStatisticsByPlayerId('283'),
             ]);
             setPlayerOneToCompare(playerOne.data.response[0]);
             setPlayerTwoToCompare(playerTwo.data.response[0]);
