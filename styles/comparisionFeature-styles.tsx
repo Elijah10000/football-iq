@@ -72,7 +72,7 @@ export const VersusDiv = styled.div<{ isDarkMode?: boolean }>`
   font-weight: 600;
 
   h3 {
-    color: ${({ isDarkMode }) => isDarkMode ? 'black' : 'white'};
+    color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
   }
 `;
 
