@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Select from 'react-select';
 import styled from "styled-components";
-import { DropdownDiv } from 'styles/index'
+import { DropdownDiv } from 'styles/index';
 import { players } from 'data/players';
 import type { Players } from 'data/players';
 import { useGlobalContext } from 'contexts/GlobalContext';
@@ -12,7 +12,6 @@ import { ChartContainer, PlayerBio, PlayerContainer } from 'styles/index'
 import { ModalComponent } from 'components/Modal'
 import { List, Bio } from 'styles/modal-stats-style'
 import ChartPage from 'components/ChartPage';
-
 
 const Dropdown = styled(Select) <{ isDarkMode?: boolean }>`
   color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};

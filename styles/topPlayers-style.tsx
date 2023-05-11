@@ -12,7 +12,7 @@ export const TopPlayersDiv = styled.div<{ isDarkMode?: boolean }>`
     grid-gap: 30px;
   }
 
-  @media (min-width: 1024px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(4, 1fr);
     max-width: 2024px;
     margin: 0 auto;

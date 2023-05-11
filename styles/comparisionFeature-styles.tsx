@@ -21,7 +21,6 @@ export const ComparisonWord = styled.h3<{ isDarkMode?: boolean }>`
   }
 `;
 
-
 export const PlayerWrapper = styled.div<{ isDarkMode?: boolean }>`
   position: relative;
   display: flex;

@@ -262,7 +262,6 @@ export default function Home({ players, team, leagues }: IHome) {
     })
   };
 
-  console.log(selectedTeam, isPlayStatModalOpen, selectedPlayers, teams)
 
   return (
     <div>
