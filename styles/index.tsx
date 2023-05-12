@@ -52,17 +52,21 @@ interface SearchDivProps {
 }
 
 export const SearchDiv = styled.div<SearchDivProps>`
-    background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
+  background-color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'white'};
   margin-bottom: 3%;
   width: 10%;
 `;
 
-export const TeamCrest = styled.div`
+export const TeamCrest = styled.div<{ isDarkMode?: boolean }>`
   margin-top: 30px;
   margin-bottom: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  p {
+  color: ${({ isDarkMode }) => isDarkMode ? 'white' : 'black'};
+  }
     
   img {
   width: 170px;

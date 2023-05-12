@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { playersStatisticsApi } from 'api/playersStatistics';
+import { playersStatisticsApi } from '../api/playersStatistics';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { combinePlayerCompetitionData }  from "helpers/formatting";

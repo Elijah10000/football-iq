@@ -5,7 +5,7 @@ import { DropdownDiv } from 'styles/index';
 import { players } from 'data/players';
 import type { Players } from 'data/players';
 import { useGlobalContext } from 'contexts/GlobalContext';
-import { playersStatisticsApi } from 'api/playersStatistics';
+import { playersStatisticsApi } from '../api/playersStatistics';
 import { PlayerData } from 'pages/index';
 import { Container, Player1, Player2, PlayerWrapper, ComparisonWord, VersusDiv, StatTitle, StatsGrid, StatItem, BioGrid } from 'styles/comparisionFeature-styles';
 import { ChartContainer, PlayerBio, PlayerContainer } from 'styles/index'

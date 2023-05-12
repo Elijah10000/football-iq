@@ -2,15 +2,15 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { ReactNode } from 'react'
 import { playersApi } from '../api/players'
-import { leaguesApi } from 'api/leagues'
-import { teamsApi } from 'api/teams'
-import { playersStatisticsApi } from 'api/playersStatistics'
-import { teamStatisticsApi } from 'api/teamStatistics'
+import { leaguesApi } from '../api/leagues'
+import { teamsApi } from '../api/teams'
+import { playersStatisticsApi } from '../api/playersStatistics'
+import { teamStatisticsApi } from '../api/teamStatistics'
 import { Container, PlayersList, Player, LogoDiv, DropdownDiv, PlayerStatsList, TeamCrest, TeamImage, TeamName, PlayerStatsDiv, PlayerPhoto, ChartContainer, PlayerBio, PlayerContainer, PlayerName, TeamStats, Div1, LoadingMessage } from 'styles/index'
 import { useState, useEffect } from 'react'
 import { useGlobalContext } from 'contexts/GlobalContext';
-import type { Team } from 'api/teams';
-import type { TeamData } from 'api/teamStatistics';
+import type { Team } from '../api/teams';
+import type { TeamData } from '../api/teamStatistics';
 import styled from 'styled-components'
 import Hamburger from 'components/hamburgerBar'
 import { ModalComponent } from 'components/Modal'
@@ -493,13 +493,13 @@ export default function Home({ players, team, leagues }: IHome) {
           <ComparisionFeature />
         )}
 
-        <TeamCrest>
+        <TeamCrest isDarkMode={isDarkMode}>
           {selectedTeam && (
             <>
               {selectedTeam.logo && (
                 <>
                   <img src={selectedTeam.logo} alt={selectedTeam.name} onClick={() => handleTeamLogoClick(selectedTeam.id.toString(), selectedLeague)} />
-                  <p>{selectedTeam.name}</p>
+                  <p> {selectedTeam.name}</p>
                 </>
               )}
             </>
@@ -510,7 +510,7 @@ export default function Home({ players, team, leagues }: IHome) {
           {teams && teams?.length > 0 && teams.map((team: Team) => {
             return (
               <Player key={team.team.id}>
-                <PlayerStatsList isDarkMode={isDarkMode}>
+                <PlayerStatsList c>
                 </PlayerStatsList>
                 <TeamName isDarkMode={isDarkMode}>{team.team.name}</TeamName>
                 <TeamImage src={team.team.logo} onClick={() => handleLogoClick(team.team.id)} />
