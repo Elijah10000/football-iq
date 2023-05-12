@@ -45,6 +45,9 @@ const About: React.FC = () => {
           One of the key features of our site is the ability to view detailed team and player statistics, with infographics that bring the numbers to life and help you to better understand the numbers. Here, you can find key stats that are relevant to each player, along with an in-depth breakdown of other statistics that provide further insight into how your favorite players play!
         </Text>
         <Text isDarkMode={isDarkMode}>
+          Our site also uses Google authentication to keep your account safe and secure from hackers. With the built in 2-factor authentication, you'll be notified whenever your account has been used, whether is was you or not. We make sure your information is safe, always!
+        </Text>
+        <Text isDarkMode={isDarkMode}>
           The comparison feature is an essential tool for anyone interested in analyzing the performance of different players in a given sport or game. It offers a comprehensive analysis of the statistics of each player, allowing you to compare and contrast their strengths and weaknesses. This feature helps you to identify the areas where a player excels and those that they need to work on. With this information, you can make informed decisions when it comes to selecting players for your team or assessing the performance of your opponents. By using the comparison feature, you can gain a deeper insight into the performance of players and make more informed decisions, which can lead to better outcomes in the game or sport.
         </Text>
         <Text isDarkMode={isDarkMode}>
